@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+
+<canvas id="correlation" width="400" height="200"></canvas>
+
+<script>
+    const yLabels = ["Water", "Land", "Air"]; // groups: multiple points
+    const xLabels = ["Ship", "Train", "Bike", "Cruiser", "Jet", "Bus", "Rocket", "Car"]; // items: single point
+    const data = ["Water", "Land", "Land", "Water", "Air", "Land", "Air", "Land"];
+
+    const dataObj = {
+        xLabels: xLabels,
+        yLabels: yLabels,
+        datasets: [
+            {
+                data: data,
+                pointRadius: 50, pointHoverRadius: 50,
+                pointStyle: 'rectRot',
+                showLine: false,
+                backgroundColor: "hsla(20,100%,80%,0.8)",
+                borderColor: "hsla(0,100%,50%,1)"
+            }
+        ]
+    }
+
+    Chart.defaults.scale.gridLines.drawBorder = false;
+    Chart.defaults.scale.gridLines.lineWidth = 10;
+    Chart.defaults.scale.gridLines.drawBorder = false;
+    Chart.defaults.scale.offset = true;
+    Chart.defaults.scale.ticks.padding = 20;
+
+    new Chart("correlation",
+            {
+                type: "line",
+                data: dataObj,
+                options: {
+                    legend: {display: false},
+                    scales: {
+                        xAxes: [{type: 'category'}],
+                        yAxes: [{type: 'category'}]
+                    },
+                    animation: {duration: 0},
+                    tooltips: {displayColors: false}
+                }
+            });
+</script>
+
+</body>
+</html>

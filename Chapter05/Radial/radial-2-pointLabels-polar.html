@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js">
+    </script>
+</head>
+<body>
+
+<canvas id="my-polar-area-chart" width="300" height="200"></canvas>
+
+<script>
+    const labels = ["Arctic", "", "Southern", "", "North Atlantic", "", "South Atlantic", "", "Indian", "", "South Pacific", "", "North Pacific", ""];
+    const volume = [18750, 0, 71800, 0, 146000, 0,160000, 0,264000, 0,329000, 0,341000,0];  // km3 * 10^3
+
+    Chart.defaults.global.elements.rectangle.borderWidth = 1;
+
+    const chartObj = {
+        labels: labels,
+        datasets: [
+            {
+                label: "Volume",
+                data: volume,
+                borderWidth: 0,
+                backgroundColor: [
+                    'hsla(260,100%,75%,.7','',
+                    'hsla(245,100%,75%,.7','',
+                    'hsla(230,100%,75%,.7','',
+                    'hsla(210,100%,75%,.7','',
+                    'hsla(195,100%,75%,.7','',
+                    'hsla(180,100%,75%,.7','',
+                    'hsla(165,100%,75%,.7','']
+            }
+        ]
+    }
+
+    new Chart("my-polar-area-chart", {
+        type: "polarArea",
+        data: chartObj,
+        options: {
+            legend: {display: false},
+            scale: {
+                pointLabels: {
+                    display: true,
+                    callback: (d) => 'Step ' + d,
+                    fontColor: 'blue'
+                },
+                gridLines: {
+                    circular: false
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

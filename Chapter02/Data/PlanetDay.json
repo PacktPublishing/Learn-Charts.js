@@ -1,0 +1,42 @@
+[
+  {
+    "Location": "MERCURY",
+    "Duration": 4222.6
+  },
+  {
+    "Location": "VENUS",
+    "Duration": 2802
+  },
+  {
+    "Location": "EARTH",
+    "Duration": 24
+  },
+  {
+    "Location": "MOON",
+    "Duration": 708.7
+  },
+  {
+    "Location": "MARS",
+    "Duration": 24.7
+  },
+  {
+    "Location": "JUPITER",
+    "Duration": 9.9
+  },
+  {
+    "Location": "SATURN",
+    "Duration": 10.7
+  },
+  {
+    "Location": "URANUS",
+    "Duration": 17.2
+  },
+  {
+    "Location": "NEPTUNE",
+    "Duration": 16.1
+  },
+  {
+    "Location": "PLUTO",
+    "Duration": 153.3
+  }
+]

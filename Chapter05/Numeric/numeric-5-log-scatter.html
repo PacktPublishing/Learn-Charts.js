@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+
+<canvas id="my-scatter-chart" width="200" height="200"></canvas>
+
+<script>
+
+const dataset1 = [], dataset2 = [], dataset3 = [];
+for(let i = 0; i <= 100; i+= 1) {
+    const point1 = {
+        x: i,
+        y: i*100
+    }
+    const point2 = {
+        x: i,
+        y: i*i
+    }
+    const point3 = {
+        x: i,
+        y: i*i*i
+    }
+    dataset1.push(point1);
+    dataset2.push(point2);
+    dataset3.push(point3);
+}
+
+const dataObj = {
+    datasets: [
+        {
+            data: dataset1,
+            pointRadius: 2,
+            backgroundColor: 'red'
+        },
+        {
+            data: dataset2,
+            pointRadius: 2,
+            backgroundColor: 'blue'
+        },
+        {
+            data: dataset3,
+            pointRadius: 2,
+            backgroundColor: 'green'
+        }
+    ]
+}
+
+const chartObj = {
+    type: "scatter",
+    data: dataObj,
+    options: {
+        legend: {
+            display: false
+        },
+        scales: {
+            yAxes: [{
+                type: 'logarithmic'
+            }],
+            xAxes: [{
+                //type: 'logarithmic'
+            }]
+        }
+
+    }
+};
+new Chart("my-scatter-chart", chartObj);
+
+</script>
+
+</body>
+</html>

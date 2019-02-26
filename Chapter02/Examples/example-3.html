@@ -1,0 +1,21 @@
+<html>
+<body>
+<h1>Simple page</h1>
+<p>Simple paragraph</p>
+<div id="my-section">
+    <img src="../Images/pluto.jpg" width="100"/>
+    <p>Click me!</p>
+</div>
+</body>
+
+<script>
+    const div = document.getElementById("my-section");
+    div.style.cursor = "pointer";
+    div.addEventListener("click", function() {
+        const p = document.createElement("p");
+        p.innerHTML = "New line";
+        this.appendChild(p);
+    });
+</script>
+
+</html>

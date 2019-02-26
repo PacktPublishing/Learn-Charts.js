@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #data {
+            width: 600px;
+            border: solid black 1px;
+            padding: 10px;
+        }
+        .label {
+            display: inline-block;
+            width: 60px;
+        }
+        .bar {
+            display: inline-block;
+            background: red;
+            margin: 2px 0;
+            text-align: right;
+            padding-right: 5px;
+            color: white;
+        }
+        #data .bar1 { width: 500px; }
+        #data .bar2 { width: 200px; }
+        #data .bar3 { width: 300px; }
+
+    </style>
+</head>
+<body>
+
+<h1>Pie chart</h1>
+<canvas id="chart" height="200" width="400"></canvas>
+
+<script>
+    const canvas = document.getElementById('chart');
+    const ctx = canvas.getContext('2d');
+    const rad = Math.min(canvas.height, canvas.width) / 2;
+
+    const data = [100, 100, 100];
+    const comp = n => Math.floor(Math.random() * 255);
+    const colors = function() {
+        return "rgba("+comp()+","+comp()+","+comp()+",0.5)";
+    };
+
+    let angle  = 0.0;
+    let total  = data.reduce((a, b) => a + b, 0);
+
+    for (var i = 0; i < data.length; i++) {
+        ctx.fillStyle = colors();
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(rad, rad);
+        ctx.arc(rad, rad, rad, angle, angle + (Math.PI * 2 * (data[i] / total)), false);
+        ctx.lineTo(rad, rad);
+        ctx.fill();
+        ctx.stroke();
+        angle += Math.PI * 2 * (data[i] / total);
+    }
+</script>
+</body>
+</html>

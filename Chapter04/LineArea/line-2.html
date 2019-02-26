@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js">
+    </script>
+    <style>
+        #container {
+            position: relative;
+            height: 500px;
+            width: 800px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <canvas id="my-line-chart" width="200" height="200"></canvas>
+</div>
+
+<script>
+
+    const values = [1.17, 1.35, 1.3, 1.09, 0.93, 0.76, 0.83, 0.98, 0.87, 0.89, 0.93, 0.81];
+    const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    const dataObj = {
+        labels: labels,
+        datasets: [{
+            data: values,
+            borderColor: 'hsla(300,100%,50%,1)',
+            backgroundColor: 'transparent'
+        }]
+    }
+
+    // Removes the fill under any lines - this is better than backgroundColor: 'transparent'
+    // Chart.defaults.global.elements.line.fill = false;
+
+    const chartObj = {
+        type: "line",
+        data: dataObj,
+        options:{
+            legend: {
+                display: false
+            }
+        }
+    };
+    new Chart("my-line-chart", chartObj);
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+
+<canvas id="plastic-waste-bar-chart" width="400" height="400"></canvas>
+
+<script>
+    const labelsPlastic = ["Mediterranean", "Indian", "North Atlantic, Baltic & Arctic", "South Atlantic", "North Pacific & South China", "South Pacific"];
+    const plasticWaste2010 = [2.8, 7.6, 3.8, 1.5, 15.7, 0.46]; // MMT (millions of metric tonnes) = billions of kg
+    const plasticWaste2025 = [5.3, 18.2, 8.6, 2.6, 33.4, 1.1];
+
+    Chart.defaults.global.elements.rectangle.borderWidth = 1;
+
+    let data = {
+        labels: labelsPlastic,
+        datasets: [
+            {
+                label: 2010,
+                data: plasticWaste2010,
+                borderColor: 'red',
+                backgroundColor: 'rgba(255,0,0,0.5)'
+            },
+            {
+                label: 2025,
+                data: plasticWaste2025,
+                borderColor: 'blue',
+                backgroundColor: 'rgba(0,0,255,0.5)'
+            },
+        ]
+    }
+
+    new Chart("plastic-waste-bar-chart", {type: "horizontalBar", data: data});
+
+</script>
+
+</body>
+</html>

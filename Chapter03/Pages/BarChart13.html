@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <style>
+        #canvas-container {
+            position: relative;
+            height: 80%;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="canvas-container">
+<canvas id="ocean-volume-bar-chart" width="400" height="400"></canvas>
+</div>
+
+<script>
+
+    const dataObj = {
+        labels: ["Volume"],
+        datasets: [
+            {
+                label: "Arctic", data: [18750],
+                backgroundColor: "hsla(0,100%,50%,0.5)"
+            },{
+                label: "North Atlantic", data: [146000],
+                backgroundColor: "hsla(60,100%,50%,0.5)"
+            },{
+                label: "South Atlantic", data: [160000],
+                backgroundColor: "hsla(120,100%,50%,0.5)"
+            },{
+                label: "Indian", data: [264000],
+                backgroundColor: "hsla(180,100%,50%,0.5)"
+            },{
+                label: "North Pacific", data: [341000],
+                backgroundColor: "hsla(240,100%,50%,0.5)"
+            },{
+                label: "South Pacific", data: [329000],
+                backgroundColor: "hsla(300,100%,50%,0.5)"
+            },{
+                label: "Southern", data: [71800],
+                backgroundColor: "hsla(340,100%,50%,0.5)"
+            },
+        ]
+    };
+
+    const optionsObj = {
+       maintainAspectRatio: false,
+        title: {
+            display: true,
+            text: 'Volume of oceans (km3)',
+            fontSize: 16
+        },
+        legend: {
+            position: 'right'
+        },
+        scales: {
+            xAxes: [{
+                stacked: true
+            }],
+            yAxes: [{
+                stacked: true
+            }]
+        }
+    }
+
+    new Chart("ocean-volume-bar-chart", {type: "bar", data: dataObj, options: optionsObj});
+
+</script>
+
+</body>
+</html>

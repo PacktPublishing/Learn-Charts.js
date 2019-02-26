@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+
+<canvas id="my-scatter-chart" width="400" height="200"></canvas>
+
+<script>
+
+const values = [], labels = []
+for(let i = 0; i <= 25; ++i) {
+    labels.push(i)
+    values.push(25-Math.pow(Math.log(i), 3));
+}
+const datasets = [{data: values, borderColor: 'red'}];
+
+Chart.defaults.global.elements.line.fill = false;
+
+const chartObj = {
+    type: "radar",
+    data: { labels: labels, datasets: datasets },
+    options: {
+        animation: { duration: 0 },
+        legend: { display: false },
+        scale: {
+            ticks: {
+                fontColor: 'blue',
+                callback: (d) => d + ' m',
+                reverse: true,
+                min: 0,
+            }
+        }
+    }
+};
+new Chart("my-scatter-chart", chartObj);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Line chart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+
+<canvas id="my-line-chart" width="400" height="200"></canvas>
+
+<script>
+    // NASA/GISS temperature anomalies for 2016
+    const values = [1.17, 1.35, 1.3, 1.09, 0.93, 0.76, 0.83, 0.98, 0.87, 0.89, 0.93, 0.81];
+    const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    const dataObj = {
+        labels: labels,
+        datasets: [{
+            data: values
+        }]
+    }
+
+    const chartObj = {
+        type: "line",
+        data: dataObj
+    };
+    new Chart("my-line-chart", chartObj);
+</script>
+</body>
+</html>

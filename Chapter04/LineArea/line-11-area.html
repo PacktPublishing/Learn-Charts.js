@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
+
+</head>
+<body>
+<!-- https://data.worldbank.org/indicator/EN.ATM.CO2E.PC -->
+<canvas id="my-area-chart" width="400" height="200"></canvas>
+
+<script>
+
+    fetch('../Data/world_bank_co2_kt.json')
+            .then(response => response.text())
+            .then((json) => {
+        draw(JSON.parse(json));
+    });
+
+
+    function draw(datasetsObj) {
+        const datasets = [];
+        datasetsObj.entries.forEach((entry, index) => {
+            const color = 'hsla('+((index+5)*50)+',75%,75%,1)';
+            const dataset = {
+                label: entry.country,
+                data: entry.data,
+                borderColor: color,
+                backgroundColor: color,
+                borderWidth: 3,
+                fill: 'start',
+                pointRadius: 0
+            };
+            datasets.push(dataset);
+        });
+
+        const dataObj = {
+            labels: datasetsObj.labels,
+            datasets: datasets
+        }
+
+        const chartObj = {
+            type: "line",
+            data: dataObj,
+            options:{
+                legend: {
+                    labels: {
+                        boxWidth: 20,
+                    }
+                }
+
+            }
+        };
+        new Chart("my-area-chart", chartObj);
+    }
+</script>
+
+
+</body>
+</html>

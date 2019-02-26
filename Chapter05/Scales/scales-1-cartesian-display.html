@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+
+<canvas id="ocean-volume-bar-chart" width="400" height="200"></canvas>
+
+<script>
+    const labels = ["Arctic", "North Atlantic", "South Atlantic", "Indian", "North Pacific", "South Pacific", "Southern"];
+    const volumes = [18750, 146000, 160000, 264000, 341000, 329000, 71800];
+
+    const dataObj = {
+        labels: labels,
+        datasets: [
+            {
+                label: "Volume",
+                data: volumes,
+                borderWidth: 2,
+                backgroundColor: "hsla(20,100%,80%,0.8)",
+                borderColor: "hsla(0,100%,50%,1)"
+            }
+        ]
+    }
+    new Chart("ocean-volume-bar-chart",
+            {
+                type: "bar",
+                data: dataObj,
+                options: {
+                    legend: {display: false},
+                    scales: {
+                        xAxes: [{display: false}],
+                        yAxes: [{display: false}]
+                    }
+                }
+            });
+</script>
+
+</body>
+</html>

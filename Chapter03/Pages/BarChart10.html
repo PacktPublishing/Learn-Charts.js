@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <style>
+        #canvas-container {
+            position: relative;
+            height: 80%;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="canvas-container">
+    <canvas id="bar-chart" width="400" height="400"></canvas>
+</div>
+
+<script>
+
+     fetch('../Data/waste.csv')
+     .then(response => response.text())
+     .then((data) => {
+        const labels = [], values = [];
+        const rows = data.split("\n");
+        rows.forEach(r => {
+            const item = r.split(",");
+            labels.push(item[0]);
+            values.push(+item[1]);
+        });
+        labels.shift(); // remove the header
+        values.shift(); // remove the header
+
+        console.log(labels); // check if the arrays
+        console.log(values); // were generated correctly
+
+        draw(labels, values);
+     });
+
+    function draw(labels, values) {
+        const canvas = document.getElementById("bar-chart");
+        const ctx = canvas.getContext("2d");
+
+        new Chart(ctx, {
+            type: "horizontalBar",
+            data: {
+                labels: labels, // the labels
+                datasets: [
+                    {
+                        label: "Tonnes of plastic",
+                        data: values, // the data values
+                        borderWidth: 2,
+                        backgroundColor: "hsla(20,100%,80%,0.8)",
+                        borderColor: "hsla(0,100%,50%,1)"
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                title: {
+                    display: true,
+                    text: 'Tonnes of plastic waste',
+                    fontSize: 16
+                },
+                legend: {
+                    display: false
+                }
+            }
+        });
+    }
+
+
+</script>
+
+</body>
+</html>

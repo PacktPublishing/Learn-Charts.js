@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+
+<canvas id="chart-1" width="400" height="400"></canvas>
+
+<script>
+Chart.defaults.global.elements.line.fill = false;
+const labels = ["A","B","C","D","E"];
+const data = [-10,2,-5,10,-10];
+new Chart("chart-1", {type: "line",
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'lineTension: 0.5',
+            lineTension: 0.5,
+            borderColor: 'hsla(180,100%,25%,.9)',
+            backgroundColor: 'hsla(180,100%,75%,.2)',
+            data: data,
+            borderWidth: 1
+        },
+        {
+            label: 'lineTension: 0.25',
+            lineTension: 0.25,
+            borderColor: 'hsla(0,100%,25%,.9)',
+            backgroundColor: 'hsla(0,100%,75%,.2)',
+            data:data,
+            borderWidth: 1
+        },
+        {
+            label: 'lineTension: 0',
+            lineTension: 0,
+            borderColor: 'hsla(240,100%,25%,.9)',
+            backgroundColor: 'hsla(240,100%,75%,.2)',
+            data: data,
+            borderDash: [10,10],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        maintainAspectRatio: false,
+    }});
+
+
+</script>
+
+</body>
+</html>

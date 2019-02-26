@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
+</head>
+<body>
+
+<canvas id="my-chart"></canvas>
+
+<script>
+    console.log("Defaults", Chart.defaults);
+    console.log("Global", Chart.defaults.global);
+    console.log("Scale", Chart.defaults.scale);
+    console.log("Elements", Chart.defaults.global.elements);
+
+    Chart.defaults.global.defaultFontColor = 'blue';
+    Chart.defaults.scale.ticks.beginAtZero = true;
+    Chart.defaults.scale.scaleLabel.display = true;
+    Chart.defaults.scale.scaleLabel.labelString = 'default';
+    Chart.defaults.global.legend.display = false;
+    Chart.defaults.scale.offset = true;
+
+    Chart.defaults.global.title.display = true;
+    Chart.defaults.global.title.text = 'Asia and the Pacific (5 countries)';
+
+    Chart.defaults.global.title.fontColor = 'red';
+    Chart.defaults.scale.ticks.fontColor = 'green';
+    Chart.defaults.scale.ticks.minor.fontColor = 'red';
+    Chart.defaults.scale.ticks.major.fontColor = 'red';
+    Chart.defaults.global.legend.labels.fontColor = 'red';
+    Chart.defaults.global.tooltips.fontSize = 100;
+
+    const chart = new Chart("my-chart", {
+        type: 'line',
+        data: {
+            labels: ['a', 'b', 'c'],
+            datasets: [{
+                data: [1,2,1],
+                lineTension: 0.4
+            }]
+        },
+        options: {
+            defaultColor: 'red',
+            showLines: false,
+            elements: {
+                line: {
+                    tension: 0
+                }
+            },
+            title: {
+                display: true,
+                text: "Open JavaScript console to inspect objects",
+                fontSize: 20
+            }
+        }
+    });
+
+    console.log("Chart Data", chart.config.data);
+    console.log("Chart Options", chart.options);
+</script>
+
+</body>
+</html>

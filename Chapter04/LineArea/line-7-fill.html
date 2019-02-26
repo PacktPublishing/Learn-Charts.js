@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <style>
+        canvas {
+            border: solid 1px
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="chart-1" width="400" height="300"></canvas>
+
+<script>
+const dataObj = {
+    labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+    datasets: [
+        {
+            fill: 'start',
+            label: "fill: 'start'",
+            backgroundColor: 'hsla(0,100%,75%,.2)',
+            borderColor: 'hsla(0,100%,25%,.9)',
+            data: [-0.3, -0.21, -0.18, -0.27, -0.14, -0.29, -0.24, -0.08, -0.17, -0.16, -0.19, -0.22]
+        },{
+            fill: 'origin',
+            label: "fill: 'origin'",
+            backgroundColor: 'hsla(120,100%,75%,.2)',
+            borderColor: 'hsla(120,100%,25%,.9)',
+            data: [-0.15, 0.06, 0.12, 0.16, 0.05, 0.05, 0.1, 0.01, 0.12, 0.07, 0.13, 0.19]
+        },{
+            fill: false,
+            label: "fill: false",
+            backgroundColor: 'hsla(30,100%,50%,.2)',
+            borderColor: 'hsla(30,100%,50%,.9)',
+            data: [0.3, 0.42, 0.29, 0.32, 0.34, 0.16, 0.28, 0.24, 0.21, 0.2, 0.3, 0.21]
+        },{
+            fill: '+1',
+            label: "fill: '+1'",
+            backgroundColor: 'hsla(180,100%,65%,.2)',
+            borderColor: 'hsla(180,100%,45%,.9)',
+            data: [0.41,0.41,0.76,0.55,0.46,0.38,0.44,0.3,0.3,0.43,0.46,0.42]
+        },{
+            fill: false,
+            label: "fill: false",
+            backgroundColor: 'hsla(300,100%,75%,.2)',
+            borderColor: 'hsla(300,100%,25%,.9)',
+            data: [0.73,0.78,0.92,0.87,0.75,0.64,0.62,0.65,0.61,0.71,0.79,0.49]
+        },{
+            fill: 'end',
+            label: "fill: 'end'",
+            backgroundColor: 'hsla(240,100%,75%,.2)',
+            borderColor: 'hsla(240,100%,25%,.9)',
+            data: [1.17, 1.35, 1.3, 1.09, 0.93, 0.76, 0.83, 0.98, 0.87, 0.89, 0.93, 0.81]
+        }
+    ]
+}
+
+new Chart("chart-1", {type: "line", data: dataObj});
+
+</script>
+
+</body>
+</html>

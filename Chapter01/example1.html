@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #data {
+            width: 600px;
+            border: solid black 1px;
+            padding: 10px;
+        }
+        .label {
+            display: inline-block;
+            width: 60px;
+        }
+        .bar {
+            display: inline-block;
+            background: red;
+            margin: 2px 0;
+            text-align: right;
+            padding-right: 5px;
+            color: white;
+        }
+        #data .bar1 { width: 500px; }
+        #data .bar2 { width: 200px; }
+        #data .bar3 { width: 300px; }
+
+    </style>
+</head>
+<body>
+
+<h1>Bar chart</h1>
+<div id="data" onclick="changeData()">
+    <div><span class="label">Item 1</span><span class="bar bar1">50</span></div>
+    <div><span class="label">Item 2</span><span class="bar bar2">20</span></div>
+    <div><span class="label">Item 3</span><span class="bar bar3">30</span></div>
+</div>
+
+<script>
+    function changeData() {
+        let chart = document.getElementById("data");
+        let elements = chart.children;
+        let values = [5, 35, 15];
+        for(let i = 0; i < values.length; i++) {
+            let labelElement = elements[i].children[1].innerText = values[i];
+            elements[i].children[1].style.background = "blue";
+            elements[i].children[1].style.width = values[i] * 10 + "px";
+        }
+    }
+</script>
+</body>
+</html>

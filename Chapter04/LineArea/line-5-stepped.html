@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <style>
+        .container {
+            position: absolute;
+            width: 400px;
+            height: 300px;
+        }
+        .left {left: 50px}
+        .right {left: 500px}
+    </style>
+</head>
+<body>
+
+<div class="container left">
+    <canvas id="chart-1" width="200" height="100"></canvas>
+</div>
+<div class="container right">
+    <canvas id="chart-2" width="200" height="100"></canvas>
+</div>
+
+
+<script>
+const labels = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+new Chart("chart-1", {
+    type: "line",
+    data: {
+        labels: labels,
+        datasets: [{
+            borderColor: 'hsla(0,100%,25%,.9)',
+            backgroundColor: 'hsla(0,100%,75%,.2)',
+            steppedLine: 'before',
+            borderWidth: 1,
+            data: [-0.15, 0.06, 0.12, 0.16, 0.05, 0.05, 0.1, 0.01, 0.12, 0.07, 0.13, 0.19]
+        },
+        {
+            borderColor: 'hsla(240,100%,25%,.9)',
+            backgroundColor: 'hsla(240,100%,75%,.2)',
+            fill: false,
+            borderWidth: 1,
+            borderDash: [10,10],
+            data: [-0.15, 0.06, 0.12, 0.16, 0.05, 0.05, 0.1, 0.01, 0.12, 0.07, 0.13, 0.19]
+        }]
+    },
+    options: {
+        maintainAspectRatio: false,
+        legend: {
+            display: false,
+        },
+        title: {
+            display: true,
+            text: "steppedLine: 'before'",
+            fontSize: 18
+        }
+    }});
+
+new Chart("chart-2", {
+    type: "line",
+    data: {
+        labels: labels,
+        datasets: [{
+            borderColor: 'hsla(0,100%,25%,.9)',
+            backgroundColor: 'hsla(0,100%,75%,.2)',
+            steppedLine: 'after',
+            borderWidth: 1,
+            data: [-0.15, 0.06, 0.12, 0.16, 0.05, 0.05, 0.1, 0.01, 0.12, 0.07, 0.13, 0.19]
+        },
+        {
+            borderColor: 'hsla(240,100%,25%,.9)',
+            backgroundColor: 'hsla(240,100%,75%,.2)',
+            fill: false,
+            borderWidth: 1,
+            borderDash: [10,10],
+            data: [-0.15, 0.06, 0.12, 0.16, 0.05, 0.05, 0.1, 0.01, 0.12, 0.07, 0.13, 0.19]
+        }]
+    },
+    options: {
+        maintainAspectRatio: false,
+        legend: {
+            display: false,
+        },
+        title: {
+            display: true,
+            text: "steppedLine: 'after'",
+            fontSize: 18
+        }
+    }});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<html>
+<body>
+<head>
+    <style>
+        #my-section {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<h1>Simple page</h1>
+<p>Simple paragraph</p>
+<div id="my-section">
+    <img src="../Images/pluto.jpg" width="100"/>
+    <p>Click me!</p>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#my-section").on("click", function() {
+        $(this).append("<p>New Line</p>");
+    });
+</script>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
+</head>
+<body>
+
+<canvas id="my-pie-chart" width="200" height="200"></canvas>
+
+<script>
+
+    const numberOfEntries = 50;
+
+    fetch('../Data/cities15000.csv')
+            .then(response => response.text())
+    .then((csv) => {
+        const data = Papa.parse(csv, {header: true}).data;
+        const reduced = reduceData(data, 10);
+        drawData(reduced);
+    });
+
+    function getColor(count) {
+        return 'hsla('+(count * 300 / numberOfEntries)+', 100%, 70%, .9)';
+    }
+
+    function reduceData(array) {
+        array.sort((a, b) =>  a.population - b.population);
+        const top = array.slice(array.length - numberOfEntries,array.length)
+                .map(d => {
+                    return {city: d["asciiname"], data: +d.population};
+                 });
+        let others = array.slice(0, array.length - numberOfEntries);
+        const sumOthers = others.map(d => +d.population).reduce((a,b) => a+b, 0);
+        others = {city: "Others", data: sumOthers};
+
+        top.push(others);
+        return top;
+    }
+
+    function drawData(data) {
+        const dataset = [], labels = [], colors = [];
+        let count = 0;
+        data.forEach(d => {
+            dataset.push(d.data);
+            labels.push(d.city);
+            colors.push(getColor(count++));
+        });
+
+        const dataObj = {
+            labels: labels,
+            datasets: [
+                {
+                    data: dataset,
+                    backgroundColor: colors,
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'black',
+                    hoverBorderColor: 'white'
+                }
+            ]
+        }
+
+        const chartObj = {
+            type: "doughnut",
+            data: dataObj,
+            options: {
+                legend: {
+                    position: 'bottom'
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            const value = data.datasets[0].data[tooltipItem.index];
+                            var label = data.labels[tooltipItem.index] || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += Math.round(value/1000) + " million";
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+        new Chart("my-pie-chart", chartObj);
+    }
+
+
+</script>
+
+</body>
+</html>

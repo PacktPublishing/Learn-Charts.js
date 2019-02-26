@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../Chapter7/JavaScript/canvasmap.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
+    <style>
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: solid 1px red;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="map" width="1000" height="500"></canvas>
+<canvas id="my-scatter-chart" width="1000" height="500"></canvas>
+
+<script>
+    var canvas = document.getElementById("map");
+    var ctx = canvas.getContext("2d");
+
+    // Map ocean background
+    ctx.fillStyle = 'rgb(200,200,255)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // countries border and background
+    ctx.lineWidth = .25;
+    ctx.strokeStyle = 'white';
+    ctx.fillStyle = 'rgb(50,50,160';
+
+    // load files
+    const files = ['../Data/world.geojson', '../Data/cities15000.csv'];
+    var promises = files.map(file => fetch(file).then(resp => resp.text()));
+    Promise.all(promises).then(results => {
+        const object = JSON.parse(results[0]);
+        drawMap(object.features);
+        const data = Papa.parse(results[1], {header: true});
+        drawData(data.data);
+    });
+
+    function drawData(datasets) {
+        const locations = [];
+        datasets.forEach(city => {
+            const obj = {
+                x: scaleX(+city.longitude),
+                y: scaleY(-city.latitude),
+                name: city.asciiname
+            }
+            locations.push(obj);
+        });
+
+        const dataObj = {
+            datasets: [
+                {
+                    label: "Label",
+                    data: locations,
+                    pointRadius: .25,
+                    pointBackgroundColor: 'white'
+
+                }
+            ]
+        }
+
+        const chartObj = {
+            type: "scatter",
+            data: dataObj,
+            options: {
+                animation: {
+                    duration: 0
+                },
+                title: {
+                    display: false
+                },
+                responsive: false,
+                layout: {
+                    padding: {
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [
+                        {
+                            display: false,
+                            ticks: {
+                                min: scaleX(-180),
+                                max: scaleX(180)
+                            }
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            display: false,
+                            ticks: {
+                                min: scaleY(-90),
+                                max: scaleY(90)
+                            }
+                        }
+                    ]
+                },
+                tooltips: {
+                    callbacks: {
+                        title: (items,data) => locations[items[0].index].name,
+                        label: () => ''
+                }
+            }
+            }
+        };
+        new Chart("my-scatter-chart", chartObj);
+    }
+
+
+</script>
+
+</body>
+</html>

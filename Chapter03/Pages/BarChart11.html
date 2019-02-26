@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <style>
+        #canvas-container {
+            position: relative;
+            height: 120%;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="canvas-container">
+    <canvas id="bar-chart" width="400" height="400"></canvas>
+</div>
+
+<script>
+
+     fetch('../Data/waste2.csv')
+     .then(response => response.text())
+     .then((data) => {
+        const labels = [], values2010 = [], values2025 = [];
+        const rows = data.split("\n");
+        rows.forEach(r => {
+            const item = r.split(",");
+            labels.push(item[0]);
+            values2010.push(+item[1]/1000000); // divide by 1 million to make
+            values2025.push(+item[2]/1000000); // the chart easier to read
+
+        });
+        labels.shift();
+        values2010.shift();
+        values2025.shift();
+
+        draw(labels, [values2010, values2025]);
+     });
+
+    function draw(labels, values) {
+        const canvas = document.getElementById("bar-chart");
+        const ctx = canvas.getContext("2d");
+        new Chart(ctx, {
+            type: "horizontalBar",
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "2010",
+                        data: values[0],
+                        backgroundColor: "hsla(20,100%,50%,0.7)",
+                    },{
+                        label: "2025",
+                        data: values[1],
+                        backgroundColor: "hsla(260,100%,50%,0.7)",
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                title: {
+                    display: true,
+                    text: 'Millions of tonnes of plastic waste',
+                    fontSize: 16
+                }
+            }
+        });
+    }
+
+
+</script>
+
+</body>
+</html>

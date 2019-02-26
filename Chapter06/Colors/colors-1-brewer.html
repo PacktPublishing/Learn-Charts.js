@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ColorBrewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="200" height="100"></canvas>
+<script>
+    const data = {
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        datasets: [
+            {
+                data: [10, 5, 2, 20, 30, 41],
+                backgroundColor: ['#d73027','#fc8d59','#fee090','#e0f3f8','#91bfdb','#4575b4']
+            }
+        ]
+    };
+    new Chart('canvas', { type: 'bar', data: data,  options: {legend: {display: false}} });
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<!-- https://datahub.io/core/global-temp -->
+<!-- NASA GISS - radar -->
+<canvas id="my-line-chart" width="400" height="200"></canvas>
+
+<script>
+    // make one dataset of months for each year
+    // filter each 10th year
+
+    const months =
+            ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+    $.getJSON('../Data/monthly_json.json', function(json) {
+            const dataMap = new Map();
+            const obj = json.reverse()
+                            .filter(field => field.Source == 'GISTEMP');
+
+            obj.forEach(d => {
+                const year = d.Date.split("-")[0];
+                const month = d.Date.split("-")[1];
+                if(dataMap.get(year)) {
+                    dataMap.get(year).push({year: year, month: month, value: d.Mean});
+                } else {
+                    dataMap.set(year, [{year: year, month: month, value: d.Mean}]);
+                }
+            });
+            draw(dataMap);
+    });
+
+    function draw(datasetMap) {
+
+        const datasets = [];
+        let labels = [];
+        datasetMap.forEach((entry, key) => {
+            const dataset = {
+                label: key,
+                data: entry.map(n => n.value),
+                borderColor: 'hsla('+(key*2)+',50%,50%,0.9)',
+                backgroundColor: 'hsla('+(key*2)+',50%,50%,0.9)',
+                borderWidth: 1,
+                pointRadius: 0
+            };
+            datasets.push(dataset);
+            if(labels.length == 0) {
+                labels = entry.map(n => months[+n.month - 1]);
+            }
+        });
+
+        const dataObj = {
+            labels: labels,
+            datasets: datasets
+        }
+
+        Chart.defaults.global.elements.line.fill = false;
+
+        const chartObj = {
+            type: "line",
+            data: dataObj,
+            options:{}
+        };
+        new Chart("my-line-chart", chartObj);
+    }
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js">
+    </script>
+
+</head>
+<body>
+
+<canvas id="my-radar-chart" width="400" height="200"></canvas>
+
+<script>
+
+    const dataObj = {
+        labels: ["Lisbon", "Paris", "Berlin", "Moscow", "Rome", "Barcelona"],
+        datasets: [
+            {
+                label: "Trip schedule #1",
+                data: [5,5,5,5,5,5],
+                borderColor: 'red',
+                backgroundColor: 'hsla(0,75%,75%,.25)'
+            },
+            {
+                label: "Trip schedule #2",
+                data: [7,3,3,3,7,7],
+                borderColor: 'blue',
+                backgroundColor: 'hsla(240,75%,75%,.25)'
+            },
+            {
+                label: "Trip schedule #3",
+                data: [4,7,7,7,3,2],
+                borderColor: 'yellow',
+                backgroundColor: 'hsla(60,75%,75%,.25)'
+            }
+        ]
+    }
+
+    const chartObj = {
+        type: "radar",
+        data: dataObj,
+        options: {
+            scale: {
+                ticks: {
+                    beginAtZero: true,
+                    stepSize: 1
+                }
+            }
+        }
+    };
+    new Chart("my-radar-chart", chartObj);
+
+</script>
+
+
+</body>
+</html>

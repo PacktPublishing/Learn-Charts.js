@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #tooltip {
+            opacity: 0;
+            position: absolute;
+            margin: 5px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+<canvas id="chart" width="200" height="100"></canvas>
+<div id="tooltip"></div>
+<script>
+
+    var data = {
+        labels: ["jupiter", "saturn", "uranus", "neptune"],
+        datasets: [
+            {
+                data: [142984,120536,51118,49528],
+                backgroundColor: ['#d7191c','#fdae61','#abdda4','#2b83ba'],
+            }]
+    };
+
+    var c2 = new Chart('chart', {
+        type: 'bar',
+        data: data,
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: 'Planetary diameters',
+                fontSize: 24
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: true,
+                enabled: false,
+                custom: function(model) {
+                    const datasets = this.datasets;
+                    const tooltip = document.getElementById('tooltip');
+                    if(model.opacity === 0) {
+                        tooltip.style.opacity = 0;
+                        return;
+                    }
+                    if(model.body) {
+                        const value = model.body[0].lines[0];
+                        tooltip.innerHTML = '<b>'+ value + " km<br/>"
+                                           +'<img width="50" src="../Images/'+model.title[0]+'.jpg"</img>';
+
+                        const position = this._chart.canvas.getBoundingClientRect();
+
+                        tooltip.style.opacity = 1;
+                        tooltip.style.left = position.left + model.caretX + 'px';
+                        tooltip.style.top  = -50 + position.top  + model.caretY + 'px';
+
+                    }
+                }
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>

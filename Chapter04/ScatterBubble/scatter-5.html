@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
+</head>
+<body>
+
+<canvas id="my-scatter-chart" width="1000" height="500"></canvas>
+
+<script>
+    var canvas = document.getElementById("my-scatter-chart");
+
+    // load files
+    const files = ['../Data/monthly_json.json', '../Data/co2_mm_mlo.csv'];
+    var promises = files.map(file => fetch(file).then(resp => resp.text()));
+    Promise.all(promises).then(results => {
+        const temperatures = JSON.parse(results[0]);
+        const co2emissions = Papa.parse(results[1], {header: true}).data;
+        const data = combine(temperatures, co2emissions);
+        drawData(data);
+    });
+
+    function combine(tempData, co2Data) {
+        const entries = [];
+        co2Data.filter(n => +n.year >= 1959 && n.average >=0).forEach(measurement => {
+            const year = measurement.year;
+            const month = measurement.month;
+            let temperature = 0;
+            tempData.filter(n => n.Source == 'GISTEMP' && +n.Date.split("-")[0] >= 1959)
+                    .forEach(temp => {
+                        if(+temp.Date.split("-")[0] == year && +temp.Date.split("-")[1] == month){
+                            temperature = temp.Mean;
+                        }
+            });
+            const entry = {
+                co2: measurement.average,
+                temp: temperature
+            }
+            entries.push(entry);
+        });
+        return entries;
+    }
+
+    function drawData(datasets) {
+        const entries = [];
+        datasets.forEach(entry => {
+            const obj = {
+                x: entry.co2,
+                y: entry.temp
+            };
+            entries.push(obj);
+        });
+
+        const dataObj = {
+            datasets: [
+                {
+                    data: entries,
+                    pointRadius: 2,
+                    pointBackgroundColor: 'rgba(255,0,0,.5)'
+                }
+            ]
+        }
+
+        const chartObj = {
+            type: "scatter",
+            data: dataObj,
+            options: {
+                legend: { display: false},
+                title: {
+                    display: true,
+                    text: 'CO2 emissions vs. Global temperatures',
+                    fontSize: 24
+                },
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            labelString: 'CO2 emissions (ppm)',
+                            display: true
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            labelString: 'Temperature anomaly (Celsius)',
+                            display: true
+                        }
+                    }],
+                }
+            }
+        };
+        new Chart("my-scatter-chart", chartObj);
+    }
+
+</script>
+
+</body>
+</html>

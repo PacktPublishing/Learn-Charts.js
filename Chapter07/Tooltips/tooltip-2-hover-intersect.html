@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+<canvas id="chart" width="200" height="100"></canvas>
+
+<script>
+
+    var data = {
+        labels: ["One", "Two", "Three", "Four"],
+        datasets: [
+            {   label: 'Dataset 1',
+                data: [0, 15, 5, 20],
+                backgroundColor: 'rgba(100%,0%,0%,.1)',
+                borderColor: 'red'
+            },{
+                label: 'Dataset 2',
+                data: [5, 30, 9, 15],
+                backgroundColor: 'rgba(0%,0%,90%,.1)',
+                borderColor: 'blue'
+            },{
+                label: 'Dataset 3',
+                data: [20, 7, 15, 2],
+                backgroundColor: 'rgba(0%,70%,0%,.1)',
+                borderColor: 'green'
+            }]
+    };
+
+    var c2 = new Chart('chart', {
+        type: 'line',
+        data: data,
+        options: {
+            legend: { display: false },
+            hover: {
+                intersect: false,
+                axis: 'y',
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+                axis: 'y'
+            },
+            events: ['click']
+        }
+    });
+
+</script>
+
+</body>
+</html>

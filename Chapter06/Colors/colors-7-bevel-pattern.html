@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../JavaScript/palette.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/patternomaly@1.3.0/dist/patternomaly.min.js"></script>
+    <script src="../JavaScript/chartjs-plugin-style.min.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="800" height="400"></canvas>
+<script>
+
+    // Use canvas patterns
+
+    const dataValues1 = [20, 5, 2, 20, 30, 51];
+    const dataLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    const data = {
+        labels: dataLabels,
+        datasets: [
+            {
+                label: 'Week 1',
+                data: dataValues1,
+                backgroundColor: pattern.generate( palette('tol', 6).map(n=>'#'+n) ),
+                bevelWidth: 5,
+                bevelHighlightColor: 'rgba(255, 255, 255, 0.75)',
+                bevelShadowColor: 'rgba(0, 0, 0, 0.5)',
+                shadowOffsetX: 5,
+                shadowOffsetY: 0,
+                shadowBlur: 10,
+                shadowColor: 'rgba(0, 0, 0, 0.5)',
+            }
+        ]
+    };
+
+    new Chart('canvas', {
+        type: 'doughnut',
+        data: data,
+        options: {legend: {position: 'right'}}
+    });
+
+</script>
+
+</body>
+</html>

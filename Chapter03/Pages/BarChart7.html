@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <style>
+        #canvas-container {
+            position: relative;
+            height: 80%;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="canvas-container">
+    <canvas id="ocean-volume-bar-chart" width="400" height="400"></canvas>
+</div>
+
+<script>
+    // Source: https://www.ngdc.noaa.gov/mgg/global/etopo1_ocean_volumes.html
+    const labels = ["Arctic", "North Atlantic", "South Atlantic", "Indian", "North Pacific", "South Pacific", "Southern"];
+    const area = [15558,41900,40270,70560,84000,84750,21960]; // km2 * 10^3
+    const volume = [18750,146000,160000,264000,341000,329000,71800];  // km3 * 10^3
+
+    const canvas = document.getElementById("ocean-volume-bar-chart");
+    const ctx = canvas.getContext("2d");
+
+    const ch = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Volume",
+                    data: volume,
+                    borderWidth: 2,
+                    backgroundColor: "hsla(20,100%,80%,0.8)",
+                    borderColor: "hsla(0,100%,50%,1)"
+                }
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: ['Volume of the oceans','in thousands of cubic km'],
+                fontFamily: "TrebuchetMS",
+                fontSize: 24
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+    canvas.addEventListener("click", toggle);
+
+    function toggle(event) {
+        if(ch.data.datasets[0].label == "Volume") {
+            ch.data.datasets[0].data = area;
+            ch.data.datasets[0].label = "Area";
+            ch.data.datasets[0].borderColor = "hsla(120,100%,50%,1)";
+            ch.data.datasets[0].backgroundColor = "hsla(140,100%,80%,0.8)";
+            ch.options.title.text = ['Surface area of the oceans','in thousands of square km'];
+        } else {
+            ch.data.datasets[0].data = volume;
+            ch.data.datasets[0].label = "Volume";
+            ch.data.datasets[0].backgroundColor = "hsla(20,100%,80%,0.8)";
+            ch.data.datasets[0].borderColor = "hsla(0,100%,50%,1)";
+            ch.options.title.text = ['Volume of the oceans','in thousands of cubic km'];
+        }
+        ch.update();
+    }
+
+</script>
+
+</body>
+</html>

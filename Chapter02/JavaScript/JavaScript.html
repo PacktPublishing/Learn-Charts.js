@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const line = "Multiline strings can be \
+reated adding a backslash \
+at the end of each line";
+    const template = `The square root of 2 is ${Math.sqrt(2)}`;
+
+    const s = "This is a backslash \\ and this is a double quote \"";
+
+    function f() {
+        console.log('function', this);
+    }
+
+    const object = {}
+    object.method = function() {
+        console.log('method', this)
+    }
+    object.arrow = () => console.log('arrow', this)
+
+    f();
+    object.method()
+    object.arrow()
+
+</script>
+</body>
+</html>

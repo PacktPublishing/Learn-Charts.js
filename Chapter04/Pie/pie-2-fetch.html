@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js">
+    </script>
+</head>
+<body>
+
+<canvas id="my-pie-chart" width="400" height="200"></canvas>
+
+<script>
+
+    fetch('../Data/world_bank_co2_kt.json')
+            .then(response => response.text())
+            .then((json) => {
+        const parsed = JSON.parse(json);
+        const array = parsed.entries.map(obj => {
+            return {country: obj.country,
+                    data: Math.round(obj.data[obj.data.length -1] / 10000)/100};
+        });
+        array.sort((a, b) =>  a.data - b.data);
+        draw(array);
+    });
+
+    function draw(array) {
+        const dataset = [];
+        const labels = [];
+        const colors = [];
+
+        array.forEach((entry, index) => {
+            labels.push(entry.country);
+            dataset.push(entry.data);
+            colors.push('hsla('+((index+5)*50)+',75%,75%,1)');
+        });
+
+        const dataObj = {
+            labels: labels,
+            datasets: [{
+                data: dataset,
+                backgroundColor: colors
+            }]
+        }
+
+        const chartObj = {
+            type: "pie",
+            data: dataObj,
+            options:{
+                title: {
+                    text: "CO2 emissions (billions of tonnes)",
+                    display: true,
+                    fontSize: 24
+                },
+                legend: {
+                    labels: {
+                        boxWidth: 20,
+                    },
+                    position: 'right'
+                }
+
+            }
+        };
+        new Chart("my-pie-chart", chartObj);
+    }
+
+</script>
+
+</body>
+</html>

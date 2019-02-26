@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <style>
+        #canvas-container {
+            position: relative;
+            height: 80%;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="canvas-container">
+    <canvas id="ocean-volume-bar-chart" width="400" height="400"></canvas>
+</div>
+
+<script>
+    // Source: https://www.ngdc.noaa.gov/mgg/global/etopo1_ocean_volumes.html
+    const labels = ["Arctic", "North Atlantic", "South Atlantic", "Indian", "North Pacific", "South Pacific", "Southern"];
+    const volumes = [18750, 146000, 160000, 264000, 341000, 329000, 71800];  // km3 * 10^3
+
+    const dataObj = {
+        labels: labels,
+        datasets: [
+            {
+                label: "Volume",
+                data: volumes,
+                borderWidth: 2,
+                backgroundColor: "hsla(20,100%,80%,0.8)",
+                borderColor: "hsla(0,100%,50%,1)"
+            }
+        ]
+    }
+    new Chart("ocean-volume-bar-chart",
+            {
+                type: "bar",
+                data: dataObj,
+                options: { // configure options here
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: ['Volume of the oceans','in thousands of cubic km'],
+                        fontFamily: "TrebuchetMS",
+                        fontSize: 24,
+                        fontColor: 'rgb(0,120,0)',
+                    }
+                }
+            });
+</script>
+
+</body>
+</html>

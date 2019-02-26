@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chart.js Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+
+<canvas id="my-bar-chart" width="400" height="400"></canvas>
+
+<script>
+
+    const dataObj = {} // an empty data object
+
+    const chartObj = { // the chart object
+        type: "bar",
+        data: dataObj
+    };
+
+    const c = new Chart("my-bar-chart", chartObj);
+
+    console.log(c)
+
+</script>
+
+</body>
+</html>

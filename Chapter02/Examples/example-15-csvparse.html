@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
+</head>
+<body>
+<h1>See console for results</h1>
+<script>
+    fetch('../Data/sample.csv')
+            .then(response => response.text())
+    .then(function(csvText) {
+        const csvData = Papa.parse(csvText, {header: true}).data;
+        csvData.forEach(function(item) {
+            console.log(item.continent, +item.population, +item.areakm2);
+        })
+    });
+</script>
+</body>
+</html>

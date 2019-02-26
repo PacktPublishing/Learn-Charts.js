@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js">
+    </script>
+</head>
+<body>
+
+<canvas id="my-polar-area-chart" width="300" height="200"></canvas>
+
+<script>
+    const labels = ["Arctic", "Southern", "North Atlantic", "South Atlantic", "Indian", "South Pacific", "North Pacific"];
+    const volume = [18750, 71800, 146000, 160000, 264000, 329000, 341000];  // km3 * 10^3
+
+    Chart.defaults.global.elements.rectangle.borderWidth = 1;
+
+    const chartObj = {
+        labels: labels,
+        datasets: [
+            {
+                label: "Volume",
+                data: volume,
+                borderWidth: 2,
+                backgroundColor: [
+                    'hsla(260,100%,75%,.7',
+                    'hsla(245,100%,75%,.7',
+                    'hsla(230,100%,75%,.7',
+                    'hsla(210,100%,75%,.7',
+                    'hsla(195,100%,75%,.7',
+                    'hsla(180,100%,75%,.7',
+                    'hsla(165,100%,75%,.7']
+            }
+        ]
+    }
+
+    new Chart("my-polar-area-chart", {
+        type: "polarArea",
+        data: chartObj,
+        options: {
+            title: {
+                display: true,
+                position: 'left',
+                fontSize: 24,
+                text: "Volume of water (in 1000 cubic km)"
+            },
+            legend: {
+                position: 'right'
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

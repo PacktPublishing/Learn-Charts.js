@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+
+<canvas id="correlation" width="400" height="200"></canvas>
+
+<script>
+    const xLabels = ["Lake", "River", "Road", "Railroad", "Ocean", "Air"];
+    const yLabels = ["Car", "Bus", "Airplane", "Sailboat", "Cruiser", "Train", "Bike"]
+    const data = [
+        {x: 1, y: 4}, {x: 1, y: 5}, {x: 2, y: 4}, {x: 3, y: 1}, {x: 3, y: 2},
+        {x: 3, y: 7}, {x: 4, y: 6}, {x: 5, y: 5}, {x: 6, y: 3}
+    ];
+
+    const dataObj = {
+        datasets: [
+            {
+                data: data,
+                pointRadius: 20, pointHoverRadius: 20,
+                pointStyle: 'rectRot',
+                backgroundColor: "hsla(20,100%,80%,0.8)",
+                borderColor: "hsla(0,100%,50%,1)"
+            }
+        ]
+    }
+
+    Chart.defaults.scale.gridLines.drawBorder = false;
+    Chart.defaults.scale.gridLines.lineWidth = 2;
+    Chart.defaults.scale.gridLines.color = 'red';
+    Chart.defaults.scale.offset = true;
+    Chart.defaults.scale.ticks.padding = 10;
+    Chart.defaults.scale.ticks.min = 0;
+
+    new Chart("correlation",
+            {
+                type: "scatter",
+                data: dataObj,
+                options: {
+                    legend: {display: false},
+                    animation: { duration: 0 },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                max: 7,
+                                callback: function(value) {
+                                    return xLabels[value-1];
+                                }
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                max: 8,
+                                callback: function(value) {
+                                    return yLabels[value-1];
+                                }
+                            }
+                        }]
+                    }
+                }
+            });
+</script>
+
+</body>
+</html>

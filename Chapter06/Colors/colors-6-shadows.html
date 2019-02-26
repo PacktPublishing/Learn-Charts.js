@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="../JavaScript/chartjs-plugin-style.min.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="200" height="100"></canvas>
+<script>
+
+    const data = {
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        datasets: [
+            {
+                label: 'Week 1',
+                data: [20, 5, 2, 20, 30, 51],
+                backgroundColor: ['yellow', 'red', 'blue', 'green', 'orange', 'cyan'],
+                bevelWidth: 3,
+                bevelHighlightColor: 'rgba(255, 255, 255, 0.75)',
+                bevelShadowColor: 'rgba(0, 0, 0, 0.5)',
+                shadowOffsetX: 5,
+                shadowOffsetY: 5,
+                shadowBlur: 10,
+                shadowColor: 'rgba(0, 0, 0, 0.5)',
+            }
+        ]
+    };
+
+    new Chart('canvas', {
+        type: 'bar',
+        data: data,
+        options: {legend: {display: false}}
+    });
+
+</script>
+
+</body>
+</html>

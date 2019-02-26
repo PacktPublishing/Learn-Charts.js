@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+
+<canvas id="my-scatter-chart" width="1000" height="500"></canvas>
+
+<script>
+
+    const dataset1 = [], dataset2 = [];
+    for(let i = 0; i <= 360; i+= 5) {
+        const point1 = {
+            x: i,
+            y: Math.sin(i * Math.PI / 180)
+        }
+        const point2 = {
+            x: i,
+            y: Math.cos(i * Math.PI / 180)
+        }
+        dataset1.push(point1);
+        dataset2.push(point2);
+    }
+
+    const dataObj = {
+        datasets: [
+            {
+                label: 'Sine function',
+                data: dataset1,
+                pointRadius: 2,
+                backgroundColor: 'red'
+            },
+            {
+                label: 'Cosine function',
+                data: dataset2,
+                pointRadius: 2,
+                backgroundColor: 'blue'
+            }
+        ]
+    }
+
+    const chartObj = {
+        type: "scatter",
+        data: dataObj,
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        zeroLineWidth: 2,
+                        tickMarkLength: 15,
+                        drawBorder: false,
+                        zeroLineWidth: 0
+                    }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false,
+                        zeroLineColor: 'black',
+                        zeroLineWidth: 3,
+                        color: 'black',
+                        tickMarkLength: 15
+                    },
+                    ticks: {
+                        padding: 10
+                    }
+                }]
+            }
+        }
+    };
+    new Chart("my-scatter-chart", chartObj);
+
+</script>
+
+</body>
+</html>

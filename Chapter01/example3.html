@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #data {
+            width: 600px;
+            border: solid black 1px;
+            padding: 10px;
+        }
+        .label {
+            display: inline-block;
+            width: 60px;
+        }
+        .bar {
+            display: inline-block;
+            background: red;
+            margin: 2px 0;
+            text-align: right;
+            padding-right: 5px;
+            color: white;
+        }
+        #data .bar1 { width: 500px; }
+        #data .bar2 { width: 200px; }
+        #data .bar3 { width: 300px; }
+
+    </style>
+</head>
+<body>
+
+<h1>Pie chart</h1>
+<svg id="chart" height="200" width="200" viewBox="150 0 300 400">
+    <path d="M300,200 h-150 a150,150 0 1,0 150,-150 z"
+          fill="rgba(255,0,0,0.5)"   stroke="black" stroke-width="3" />
+    <path d="M275,175 v-150 a150,150 0 0,0 -150,150 z"
+          fill="rgba(0,255,255,0.5)" stroke="black" stroke-width="3" />
+</svg>
+
+
+</body>
+</html>

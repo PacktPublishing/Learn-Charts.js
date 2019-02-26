@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js">
+    </script>
+
+</head>
+<body>
+<!-- https://datahub.io/core/global-temp -->
+<!-- NASA GISS - radar -->
+<canvas id="my-radar-chart" width="300" height="200"></canvas>
+
+<script>
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    fetch('../Data/monthly_json.json')
+        .then(response => response.text())
+        .then((json) => {
+            draw(parseCoords(json));
+        });
+
+    function parseCoords(json) {
+        const perYear = new Map();
+        JSON.parse(json)
+            .reverse()
+            .filter(field => field.Source == 'GISTEMP')
+            .forEach(d => {
+                const year = d.Date.split("-")[0];
+                const month = d.Date.split("-")[1];
+                if(perYear.get(year)) {
+                    perYear.get(year).push({year: year, month: month, value: d.Mean});
+                } else {
+                    perYear.set(year, [{year: year, month: month, value: d.Mean}]);
+                }
+        });
+        return perYear;
+    }
+
+    function draw(datasetMap) {
+        const datasets = [];
+        let labels = [];
+        datasetMap.forEach((entry, key, index) => {
+            const dataset = {
+                label: key,
+                data: entry.map(n => n.value),
+                borderColor: 'hsla('+(key*2)+',50%,50%,0.9)',
+                backgroundColor: 'hsla('+(key*2)+',50%,50%,0.3)',
+                borderWidth: 2,
+                pointRadius: 0,
+                lineTension: .4
+            };
+            datasets.push(dataset);
+            if(labels.length == 0) {
+                labels = entry.map(n => months[+n.month - 1]);
+            }
+        });
+
+        const dataObj = {
+            labels: labels,
+            datasets: datasets.filter(d => d.label % 20 == 0 || d.label % 2016 == 0)
+        }
+
+        const chartObj = {
+            type: "radar",
+            data: dataObj,
+            options: {
+                animation: {
+                    duration: 0
+                },
+                scale: {
+                    ticks: {
+                        max: 1.5
+                    }
+                },
+                legend: {
+                    labels: {
+                        boxWidth: 20,
+                        filter: function(item, chart) {
+                            return new Number(item.text) % 20 == 0 || item.text % 2016 == 0;
+                        }
+                    }
+                }
+            }
+        };
+        const chart = new Chart("my-radar-chart", chartObj);
+
+    }
+</script>
+
+
+</body>
+</html>

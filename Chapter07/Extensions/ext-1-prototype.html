@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://unpkg.com/b64-to-blob"></script>
+    <style>
+        * {font-family: sans-serif;font-size: 12px}
+    </style>
+</head>
+<body>
+<canvas id="chart"></canvas>
+<div style="width: 150px; margin-top: 30px; padding: 5px; border: solid 1px lightgray">
+    <a id="link" download="chart.png">
+        <img id="image" width="150" src="http://placehold.it/250x100"></img>
+        Download chart as PNG
+    </a>
+</div>
+<script>
+    Chart.defaults.scale.ticks.beginAtZero = true;
+
+    const chart = new Chart("chart", {
+        type: 'bar',
+        data: {
+            labels: ['a', 'b', 'c'],
+            datasets: [
+                {
+                    data: [1,2,3],
+                    label: 'Dataset 1',
+                    backgroundColor: 'orange',
+                },
+                {
+                    data: [4,5,6],
+                    label: 'Dataset 2',
+                    backgroundColor: 'brown',
+                }
+            ]
+        },
+        options: {
+            legend: {display: false},
+            animation: {
+                onComplete: function () {
+                    const image = document.getElementById('image');
+                    image.src = this.toBase64Image();
+
+                    const link = document.getElementById('link');
+                    const blob = b64toBlob(image.src.split(',')[1], 'image/png');
+                    link.href = URL.createObjectURL(blob);
+                }
+            }
+        },
+    });
+
+
+
+</script>
+</body>
+</html>

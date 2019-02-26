@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../Chapter7/JavaScript/canvasmap.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
+</head>
+<body>
+
+<canvas id="my-scatter-chart" width="1000" height="500"></canvas>
+
+<script>
+    fetch('../Data/cities15000.csv').then(response => response.text())
+    .then(csv => drawData(Papa.parse(csv, {header: true}).data));
+
+
+    function drawData(datasets) {
+        const locations = [];
+        datasets.forEach(city => {
+            const obj = {
+                x: city.longitude,
+                y: city.latitude,
+                name: city.asciiname
+            }
+            locations.push(obj);
+        });
+
+        const dataObj = {
+            datasets: [
+                {
+                    label: "Label",
+                    data: locations,
+                    pointRadius: .25,
+                    pointBackgroundColor: 'red'
+                }
+            ]
+        }
+
+        const chartObj = {
+            type: "scatter",
+            data: dataObj,
+            options: {
+                animation: { duration: 0 },
+                title: { display: false },
+                responsive: false,
+                legend: { display: false },
+                scales: {
+                    xAxes: [
+                        {
+                            ticks: {
+                                min: -180,
+                                max: 180
+                            }
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            ticks: {
+                                min: -90,
+                                max: 90
+                            }
+                        }
+                    ]
+                },
+                tooltips: {
+                    callbacks: {
+                        title: (items,data) => locations[items[0].index].name
+                    }
+                }
+            }
+        };
+        new Chart("my-scatter-chart", chartObj);
+    }
+
+</script>
+
+</body>
+</html>

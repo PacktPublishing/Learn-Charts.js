@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
+</head>
+<body>
+
+<canvas id="my-scatter-chart" width="900" height="500"></canvas>
+
+<script>
+    var canvas = document.getElementById("my-scatter-chart");
+
+    const year1 = "1980";
+    const year2 = "2015";
+
+    // load file
+    fetch('../Data/WPP2017_UN.csv')
+            .then(response => response.text())
+    .then((csv) => {
+        const data = Papa.parse(csv, {header: true}).data;
+        drawData(data.filter(entry => entry[year1] > 3000));
+    });
+
+    function drawData(datasets) {
+        const entries = [];
+        const median  = [];
+        datasets.forEach(entry => {
+            const obj = {
+                y: entry[year1],
+                x: entry[year2],
+                country: entry["Country or region"]
+            };
+            entries.push(obj);
+        });
+
+        for(let i = 0; i < 200; i++) {
+            median.push({x: i * 7000, y: i * 7000})
+        }
+
+        console.log(entries)
+
+        const dataObj = {
+            datasets: [
+                {
+                    data: entries,
+                    type: 'scatter', // default for this chart
+                    pointRadius: 4,
+                    pointBorderWidth: .5,
+                    pointBackgroundColor: 'rgba(255,0,0,.4)',
+                    borderWidth: 1,
+                },
+                {
+                    data: median,
+                    type: 'line',
+                    borderColor: 'blue',
+                    borderWidth: 1,
+                    showLine: true,
+                    pointRadius: 0,
+                    fill: 'top'
+                }
+            ]
+        }
+
+        const chartObj = {
+            type: "scatter",
+            data: dataObj,
+            options: {
+                scales: {
+                    xAxes: [{
+                        //type: 'linear' // default
+                    }],
+                    yAxes: [{
+                        type: 'logarithmic'
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            console.log(data)
+                            return data.datasets[0].data[tooltipItem.index].country + " "
+                                    + year1 +": "+ data.datasets[0].data[tooltipItem.index].y + " - "
+                                    + year2 +": "+ data.datasets[0].data[tooltipItem.index].x;
+                        }
+                    }
+                },
+            }
+        };
+        new Chart("my-scatter-chart", chartObj);
+    }
+
+</script>
+
+</body>
+</html>

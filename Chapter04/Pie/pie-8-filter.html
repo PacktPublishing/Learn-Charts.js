@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
+    <script type="text/javascript" src="../JavaScript/Chart.PieceLabel.js"></script>
+</head>
+<body>
+
+<canvas id="my-pie-chart" width="400" height="200"></canvas>
+
+<script>
+
+    const numberOfEntries = 6;
+
+    fetch('../Data/WPP2017_UN.csv')
+        .then(response => response.text())
+        .then((csv) => {
+            const data = Papa.parse(csv, {header: true}).data;
+            const reduced = reduceData(data);
+            drawData(reduced);
+    });
+
+    function reduceData(array) {
+        array.sort((a, b) =>  a["2015"] - b["2015"]);
+        const topEntries =
+            array.slice(array.length - numberOfEntries,array.length)
+                 .map(d => ({country: d["Country or region"], data: +d["2015"]}));
+        let others = array.slice(0, array.length - numberOfEntries);
+        const sumOthers = others.map(d => +d["2015"])
+                              .reduce((a,b) => a+b, 0);
+        others = {country: "Others", data: sumOthers};
+        topEntries.push(others);
+        return topEntries;
+    }
+
+    function drawData(data) {
+        const dataset = [], labels = [], colors = [];
+        let count = 0;
+        data.forEach(d => {
+            dataset.push(Math.round(d.data/1000));
+            labels.push(d.country);
+            colors.push('hsla('+(count++ * 300 / numberOfEntries)+', 100%, 70%, .9)');
+        });
+
+        const dataObj = {
+            labels: labels,
+            datasets: [
+                {
+                    data: dataset,
+                    backgroundColor: colors,
+                    borderWidth: 5,
+                    hoverBackgroundColor: 'black',
+                    hoverBorderColor: 'white'
+                }
+            ]
+        }
+
+        const chartObj = {
+            type: "doughnut",
+            data: dataObj,
+            options: {
+                title: {
+                    display: true,
+                    position: 'left',
+                    fontSize: 24,
+                    text: "World population (millions)"
+                },
+                legend: {
+                    position: 'right'
+                },
+                pieceLabel: {
+                    fontColor: '#000',
+                    //precision: 0,
+                    render: 'value',
+                    textShadow: true,
+                    //arc: true,
+                    position: 'border'
+                }
+            }
+        };
+        new Chart("my-pie-chart", chartObj);
+    }
+
+
+</script>
+
+</body>
+</html>

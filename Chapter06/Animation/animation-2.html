@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+<canvas id="myChart" width="400" height="200"></canvas>
+<form>
+    <button type="button" id="toggle">Square/Unsquare</button>
+</form>
+<progress id="progress" max="1" value="0"></progress>
+
+<script>
+
+    function square(chart) {
+        const datasets = chart.config.data.datasets;
+        for(let i = 0; i < datasets.length; i++) {
+            for(let j = 0; j < datasets[i].data.length; j++) {
+                const value = datasets[i].data[j];
+                datasets[i].data[j] = value * value;
+            }
+        }
+        chart.options.scales.yAxes = Chart.helpers.scaleMerge(Chart.defaults.scale, {yAxes: [{type: 'logarithmic'}]}).yAxes;
+        console.log("Changed scale to " + chart.scales['y-axis-0'].type )
+        chart.update();
+    }
+
+    function squareRoot(chart) {
+        const datasets = chart.config.data.datasets;
+        for(let i = 0; i < datasets.length; i++) {
+            for(let j = 0; j < datasets[i].data.length; j++) {
+                const value = datasets[i].data[j];
+                datasets[i].data[j] = Math.sqrt(value);
+            }
+        }
+        chart.options.scales.yAxes = Chart.helpers.scaleMerge(Chart.defaults.scale, {yAxes: [{type: 'linear'}]}).yAxes;
+        console.log("Changed scale to " + chart.scales['y-axis-0'].type )
+        chart.update();
+    }
+
+
+    const progress = document.getElementById("progress");
+
+    const data = [[12, 19, 3, 5, 2, 3],[6, 5, 33, 2, 7, 11],[2, 3, 5, 16, 0, 1]];
+    const strokes = ['rgba(54, 162, 235, 1)', 'rgba(255,99,132,1)', 'rgba(132,200,99,1)'];
+    const fills   = ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(132, 200, 99, 0.2)'];
+    const grayFill = 'rgb(0,0,0,.2)';
+    const grayStroke = 'rgb(0,0,0,.8)';
+
+    const datasets = [];
+    for(let i = 0; i < data.length; i++) {
+        datasets.push({
+            label: 'Dataset ' + (i+1),
+            data: data[i],
+            backgroundColor: fills[i],
+            borderColor: strokes[i],
+        });
+    }
+
+    const myChart = new Chart("myChart", {
+        type: 'line',
+        data: {
+            labels: ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6'],
+            datasets: datasets,
+        },
+        options: {
+            animation: {
+                duration: 5000,
+                onProgress: function(animation) {
+                    console.log(animation.currentStep / animation.numSteps);
+                    progress.value = animation.currentStep / animation.numSteps;
+                },
+                onComplete: function(animation) {
+                    console.log(animation.currentStep);
+                }
+            }
+        }
+    })
+
+    const button = document.getElementById("toggle");
+    button.addEventListener('click', function() {
+        const type = myChart.options.scales.yAxes[0].type;
+        if(type == 'linear') {
+            square(myChart);
+        } else {
+            squareRoot(myChart);
+        }
+    });
+
+</script>
+
+</body>
+</html>

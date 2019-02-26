@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../JavaScript/palette.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/patternomaly@1.3.0/dist/patternomaly.min.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="1000" height="675"></canvas>
+<script>
+
+    const datasets = [];
+    const colorset = [];
+    const keys = ['plus','cross','dash','cross-dash','dot','dot-dash','disc','ring','line','line-vertical','weave','zigzag','zigzag-vertical','diagonal','diagonal-right-left','square','box','triangle','triangle-inverted','diamond','diamond-box',''];
+    const colors = palette('mpn65', keys.length).map(n=>'#'+n) ;
+
+    for(let i = 0; i < keys.length; i++) {
+        const zero = new Array(keys.length);
+        datasets.push({
+            data: zero.fill(i),
+            label: keys[i],
+            backgroundColor: i < keys.length -1 ? pattern.draw(keys[i], colors[i]) : 'white',
+            fill: i != keys.length -1 ?'+1':'start',
+            borderWidth: 5,
+            borderColor: 'white',
+            pointRadius: 0
+        });
+        colorset.push();
+    }
+
+    console.log(datasets)
+
+    new Chart('canvas', {
+        type: 'line',
+        data: {
+            datasets: datasets
+        },
+        options: {
+            responsive: false,
+            legend: {
+                position: 'right',
+                reverse: true,
+                labels: {
+                    padding: 14,
+                    fontSize: 14,
+                    boxWidth: 0
+                },
+            },
+            scales: {
+                xAxes:[{display: false}],
+                yAxes:[{display: false, ticks: {max: 22, min: -2}}]
+            },
+        }
+    });
+
+</script>
+
+</body>
+</html>

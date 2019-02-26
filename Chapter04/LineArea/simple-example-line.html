@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chart example Line</title>
+    <style>
+        canvas {
+            border: solid 1px black;
+        }
+    </style>
+    <!-- 2. Include Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+<!-- 1. add a canvas to your page -->
+<canvas id="myChart" width="400" height="200"></canvas>
+
+<!-- 3. Include a script -->
+<script>
+    //var ctx = document.getElementById("myChart").getContext('2d');
+    var ctx = document.getElementById("myChart");
+
+    var myChart = new Chart(ctx, {
+        type: 'line', // 4. Choose the type of chart
+
+        // 5. Include data
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+            datasets: [
+                {
+                    label: 'First dataset', // dataset label
+                    data: [0, 10, 5, 2, 20, 30, 45],
+                    backgroundColor: 'transparent', // use options to change this
+                    borderColor: 'rgb(255,99,150)',
+                },
+                {
+                    label: 'Second dataset', // dataset label
+                    data: [0, 12, 15, 40, 30, 26, 18],
+                    backgroundColor: 'transparent',
+                    borderColor: 'rgb(99,150,255)',
+                },
+                {
+                    label: 'Third dataset', // dataset label
+                    data: [0, 2, 3, 5, 9, 29, 49],
+                    backgroundColor: 'transparent',
+                    borderColor: 'rgb(99,180,100)',
+                }],
+        },
+        options: {} // configuration options
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        canvas {
+            border: solid 1px black;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="canvas" width="300" height="300"></canvas>
+
+</body>
+
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx    = canvas.getContext("2d");
+
+    ctx.fillStyle = "#ff0000";
+    ctx.strokeStyle = "rgba(255,127,0,0.7)";
+    ctx.lineWidth = 10;
+
+    ctx.fillRect(50,50,50,50);
+    ctx.strokeRect(50,50,50,50);
+
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 2;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = "green";
+    ctx.shadowOffsetX = ctx.shadowOffsetY = 5;
+    ctx.setLineDash([5,2,1,2]);
+
+    ctx.beginPath();
+    ctx.moveTo(150,200);
+    ctx.lineTo(150,150);
+    ctx.lineTo(100,150);
+    ctx.bezierCurveTo(100,200,150,250,200,250);
+    ctx.lineTo(200,200);
+    ctx.closePath();
+    ctx.stroke();
+
+    const text = "Canvas";
+    ctx.font = "24px monospace";
+    const textWidth = ctx.measureText(text).width;
+    const gradient = ctx.createLinearGradient(200,100,200 + textWidth,100);
+    gradient.addColorStop(0,"magenta");
+    gradient.addColorStop(1, "yellow");
+
+    ctx.fillStyle = gradient;
+    ctx.shadowColor = "transparent";
+
+    ctx.fillText("Canvas", 200, 100);
+
+    ctx.setLineDash([0]);
+    ctx.strokeStyle = "gray";
+
+    ctx.beginPath();
+    ctx.moveTo(50,200);
+    ctx.lineTo(50,250);
+    ctx.lineTo(100,250);
+    ctx.arcTo(100,200,50,200,50);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(275,150,50,1.57,3.14,false);
+    ctx.lineTo(275,150);
+    ctx.fill();
+
+    ctx.globalAlpha = 0.75;
+
+    ctx.beginPath();
+    ctx.arc(175,75,40,0,6.28,false);
+    ctx.clip();
+
+    const image = new Image(100,100);
+    image.onload = function() {
+        ctx.drawImage(this, 125, 25, this.width, this.height);
+    }
+    image.src = "../Images/pluto.jpg";
+
+</script>
+</html>

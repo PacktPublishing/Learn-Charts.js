@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
+    <script type="text/javascript" src="../JavaScript/Chart.PieceLabel.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" rel="stylesheet">
+</head>
+<body>
+
+<canvas id="my-pie-chart" width="400" height="200"></canvas>
+
+<script>
+
+    Chart.defaults.global.defaultFontColor = 'black';
+    Chart.defaults.global.defaultFontFamily = '"Yanone Kaffesatz", "Helvetica Narrow", "Arial Narrow", sans-serif';
+    Chart.defaults.global.defaultFontSize = 24;
+    Chart.defaults.global.defaultFontStyle = 'normal';
+    Chart.defaults.global.title.fontSize = 40;
+    Chart.defaults.global.title.fontColor = 'hsla(240,50%,70%,1)';
+    Chart.defaults.global.legend.labels.fontColor = 'hsla(120,20%,60%,1)';
+
+    let numberOfEntries = 6;
+
+    fetch('../Data/WPP2017_UN.csv')
+        .then(response => response.text())
+        .then((csv) => {
+            let data = Papa.parse(csv, {header: true}).data;
+            let reduced = reduceData(data, 10);
+            drawData(reduced);
+    });
+
+    function reduceData(array) {
+        array.sort((a, b) =>  a["2015"] - b["2015"]);
+        let topEntries =
+            array.slice(array.length - numberOfEntries,array.length)
+                 .map(d => { return {country: d["Country or region"], data: +d["2015"]}; });
+        let others = array.slice(0, array.length - numberOfEntries);
+        let sumOthers = others.map(d => +d["2015"])
+                              .reduce((a,b) => a+b, 0);
+        others = {country: "Others", data: sumOthers};
+        topEntries.push(others);
+        return topEntries;
+    }
+
+    function drawData(data) {
+        let dataset = [];
+        let labels = [];
+        let colors = [];
+        let count = 0;
+        data.forEach(d => {
+            dataset.push(Math.round(d.data/1000));
+            labels.push(d.country);
+            colors.push('hsla('+(count++ * 300 / numberOfEntries)+', 100%, 70%, .9)');
+        });
+
+        let dataObj = {
+            labels: labels,
+            datasets: [
+                {
+                    data: dataset,
+                    backgroundColor: colors,
+                    borderWidth: 5,
+                    hoverBackgroundColor: 'black',
+                    hoverBorderColor: 'white'
+                }
+            ]
+        }
+
+        let chartObj = {
+            type: "doughnut",
+            data: dataObj,
+            options: {
+                title: {
+                    display: true,
+                    position: 'left',
+                    text: "World population (millions)"
+                },
+                legend: {
+                    position: 'right'
+                },
+                pieceLabel: {
+                    render: 'value',
+                    textShadow: true,
+                    position: 'border'
+                }
+            }
+        };
+        new Chart("my-pie-chart", chartObj);
+    }
+
+
+</script>
+
+</body>
+</html>

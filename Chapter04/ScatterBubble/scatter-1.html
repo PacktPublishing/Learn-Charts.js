@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+
+<canvas id="my-scatter-chart" width="1000" height="500"></canvas>
+
+<script>
+
+const dataset = [];
+for(let i = 0; i <= 360; i+= 5) {
+    const point = {
+        x: i,
+        y: Math.sin(i * Math.PI / 180)
+    }
+    dataset.push(point);
+}
+
+const dataObj = {
+    datasets: [
+        {
+            data: dataset,
+            pointRadius: 2,
+            backgroundColor: 'red'
+        }
+    ]
+}
+
+const chartObj = {
+    type: "scatter",
+    data: dataObj,
+    options: {
+        legend: {
+            display: false
+        },
+
+
+    }
+};
+new Chart("my-scatter-chart", chartObj);
+
+</script>
+
+</body>
+</html>

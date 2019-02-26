@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <style>
+        .container {
+            width: 98%;
+            height: 80vh;
+            position: absolute;
+        }
+        .top {
+            height:50%;
+            position: relative;
+        }
+        .col {
+            width: 50%;
+            position: absolute;
+        }
+        .col:nth-child(2n-1) {
+            left: 50%;
+        }
+        .footer {
+            height: 50%;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="top" width="400" height="200">
+        <div class="col">
+            <canvas id="chart1"></canvas>
+        </div>
+        <div class="col">
+            <canvas id="chart2"></canvas>
+        </div>
+    </div>
+    <div class="top" width="400" height="200">
+        <div class="col">
+            <canvas id="chart3"></canvas>
+        </div>
+        <div class="col">
+            <canvas id="chart4"></canvas>
+        </div>
+    </div>
+    <div class="footer">
+        <form>
+            <button type="button" id="changeData">Get Data</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function updateData() {
+        charts.forEach(c => {
+            let datasets = 3
+            if(c.canvas.id == 'chart4') {
+                datasets = 1;
+            }
+            for(let i = 0; i < datasets; i++) {
+                for (let j = 0; j < 6; j++) {
+                    c.config.data.datasets[i].data[j] = Math.ceil(Math.random() * 25);
+                }
+            }
+            c.update();
+        });
+    }
+
+    Chart.defaults.global.legend.labels.boxWidth = 15;
+
+    const data = [[12, 19, 3, 5, 2, 3],[6, 5, 22, 2, 7, 11],[2, 3, 5, 16, 0, 1]];
+    const labels = ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6'];
+    const strokes = ['rgba(54, 162, 235, 1)', 'rgba(255,99,132,1)', 'rgba(132,255,99,1)'];
+    const fills   = ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(132, 200, 99, 0.2)'];
+
+    const datasets = [];
+    for(let i = 0; i < data.length; i++) {
+        datasets.push({
+            label: 'Dataset ' + (i+1),
+            data: data[i],
+            backgroundColor: fills[i],
+            borderColor: strokes[i],
+        });
+    }
+
+    const charts = [];
+
+    charts.push(new Chart("chart1", { type: 'line',
+        data: { labels: labels, datasets: datasets }
+    }));
+
+    charts.push(new Chart("chart2", { type: 'bar',
+        data: { labels: labels, datasets: datasets }
+    }));
+
+    charts.push(new Chart("chart3", { type: 'radar',
+        data: { labels: labels, datasets: datasets },
+        options: {legend: {display: false }}
+    }));
+
+    charts.push(new Chart("chart4", { type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [datasets[0]].map(d => ({
+                data: d.data,
+                backgroundColor: ['#d73027','#fc8d59','#fee090','#e0f3f8','#91bfdb','#4575b4'],
+            })),
+        },
+        options: {legend: {position: 'left'}}
+    }));
+
+    document.getElementById("changeData")
+            .addEventListener("click", updateData);
+
+</script>
+
+</body>
+</html>

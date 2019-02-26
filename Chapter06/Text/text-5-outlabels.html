@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../JavaScript/palette.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-piechart-outlabels">
+    </script>
+
+</head>
+<body>
+<canvas id="canvas" width="800" height="400"></canvas>
+<script>
+
+    const data = {
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        datasets: [
+            {
+                label: 'Week 1',
+                data: [20, 5, 2, 20, 30, 51],
+                backgroundColor: palette('tol', 6).map(n=>'#'+n),
+            }
+        ]
+    };
+
+    new Chart('canvas', {
+        type: 'outlabeledPie',
+        data: data,
+        options: {
+            zoomOutPercentage: 30,
+            plugins: {
+                legend: false,
+                outlabels: {
+                    text: '%l %p',
+                    color: 'white',
+                    stretch: 45,
+                    font: {
+                        resizable: true,
+                        minSize: 12,
+                        maxSize: 18
+                    }
+                }
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>

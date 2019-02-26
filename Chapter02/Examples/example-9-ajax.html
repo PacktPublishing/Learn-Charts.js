@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #data {
+            width: 800px;
+        }
+        #data div {
+            margin-top: 2px;
+        }
+        #data div span {
+            display: inline-block;
+        }
+        #data div span:nth-child(1) {
+            position: absolute;
+        }
+        #data div span:nth-child(2) {
+            position: absolute;
+            background: orange;
+            left: 90px;
+        }
+        #data div span:nth-child(3) {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Number of hours in a day</h1>
+
+<div id="data"></div>
+
+<script>
+
+    function showData(dataArray) {
+        let dataDiv = document.getElementById("data");
+        if (dataArray.length == 0) {
+            dataDiv.innerHTML = "<p>Error reading file</p>";
+        } else {
+            let maxValue = Math.max(...dataArray.map(obj => obj.Duration));
+            let maxBar = 300.0/maxValue;
+
+            for(let i = 0; i < dataArray.length; i++) {
+                let label = dataArray[i].Location.charAt(0) + dataArray[i].Location.slice(1).toLowerCase();
+                let barSize = maxBar * dataArray[i].Duration;
+                dataDiv.innerHTML +=
+                        "<div>"
+                            +"<span>" + label + "</span>"
+                            +"<span style='width: "+barSize+"px'>&nbsp;</span>"
+                            +"<span style='left: " +(90 + barSize)+"px'>" + dataArray[i].Duration + "</span>"
+                        +"</div>";
+            }
+        }
+    }
+
+    let dataArray = [];
+    let httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', '../Data/PlanetDay.csv');
+    httpRequest.send();
+
+    httpRequest.onreadystatechange = function(){
+        if (httpRequest.readyState === XMLHttpRequest.DONE) {
+            if (httpRequest.status === 200) {
+                parse(httpRequest.responseText);
+            }
+            showData(dataArray);
+        }
+    }
+
+    function parse(text) {
+        let headers = text.split("\n")[0].split(",");
+        let values = text.split("\n")[1].split(",");
+        for(let i = 0; i < headers.length; i++) {
+            let dataObject = { "Location": headers[i], "Duration": +values[i] };
+            dataArray.push(dataObject);
+        }
+    }
+
+</script>
+
+</body>
+</html>

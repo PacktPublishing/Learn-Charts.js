@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        * {font-family: sans-serif;font-size: 12px}
+        #stats {
+            visibility: hidden;
+            width: 100%;
+
+        }
+    </style>
+</head>
+<body>
+<div id="stats"></div>
+<canvas id="chart"></canvas>
+<script>
+    const calls = new Map();
+    let count = 0;
+
+    function showResults(calls) {
+        for (const [key, log] of calls.entries()) {
+            console.log(key, log.param2, log.param3);
+            $('#stats').append(`<br>${log.position}. ${log.plugin}: ${log.callback}: ${log.times} times`)
+        }
+        $('#stats').css('visibility','visible');
+    }
+
+    function log(chart, param2, param3, id, callback) {
+        if (calls.has(id+":"+callback)) {
+            calls.get(id+":"+callback).times++;
+        } else {
+            calls.set(id+":"+callback, {
+                chart: chart,
+                callback: callback,
+                plugin: id,
+                times: 1,
+                position: ++count,
+                param2: param2,
+                param3: param3
+            });
+        }
+    }
+
+    Chart.defaults.scale.ticks.beginAtZero = true;
+
+    const plugin1 = {
+        id: 'p1',
+        beforeInit: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'beforeInit');
+        },
+        afterInit: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'afterInit()');
+        },
+        beforeUpdate: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'beforeUpdate()');
+        },
+        afterUpdate: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'afterUpdate()');
+        },
+        beforeLayout: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'beforeLayout()');
+        },
+        afterLayout: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'afterLayout()');
+        },
+        beforeDatasetsUpdate: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'beforeDatasetsUpdate()');
+        },
+        afterDatasetsUpdate: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'afterDatasetsUpdate()');
+        },
+        beforeDatasetUpdate: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'beforeDatasetUpdate()');
+        },
+        afterDatasetUpdate: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'afterDatasetUpdate()');
+        },
+        beforeRender: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'beforeRender()');
+        },
+        afterRender: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'afterRender()');
+            chart.destroy();
+            showResults(calls);
+        },
+        beforeDraw: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'beforeDraw()');
+        },
+        afterDraw: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'afterDraw()');
+        },
+        beforeDatasetsDraw: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'beforeDatasetsDraw()');
+        },
+        afterDatasetsDraw: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'afterDatasetsDraw()');
+        },
+        beforeDatasetDraw: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'beforeDatasetDraw()');
+        },
+        afterDatasetDraw: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'afterDatasetDraw()');
+        },
+        beforeEvent: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'beforeEvent()');
+        },
+        afterEvent: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'afterEvent()');
+        },
+        resize: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'resize()');
+        },
+        destroy: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'destroy()');
+        },
+    };
+    const plugin2 = {
+        id: 'p2',
+        afterRender: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'afterRender()')
+        },
+    };
+    const plugin3 = {
+        id: 'p3',
+        afterRender: function(chart, param2, param3) {
+            log(chart, param2, param3, this.id,'afterRender()')
+        },
+    };
+    Chart.plugins.register(plugin3);
+
+    const chart = new Chart("chart", {
+        type: 'bar',
+        data: {
+            labels: ['a', 'b', 'c'],
+            datasets: [
+                {
+                    data: [1,2,3],
+                    label: 'Dataset 1',
+                    backgroundColor: 'orange',
+                },
+                {
+                    data: [4,5,6],
+                    label: 'Dataset 2',
+                    backgroundColor: 'brown',
+                }
+            ]
+        },
+        options: {},
+        plugins: [plugin1, plugin2]
+    });
+
+
+
+</script>
+</body>
+</html>

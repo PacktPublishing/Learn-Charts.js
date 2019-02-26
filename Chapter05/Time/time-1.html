@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+</head>
+<body>
+
+<canvas id="my-chart" width="900" height="500"></canvas>
+
+<script>
+const dataset = [];
+let date = moment('20181120');
+for(let i = 1; i <= 10; i+= 1) {
+    dataset.push({t: date, y: Math.random() * 10});
+    date = moment(date).add( Math.floor(Math.random() * 10)+1, 'days').calendar();
+}
+
+console.log(dataset, dataset.length)
+
+const dataObj = {
+    datasets: [{
+        data: dataset,
+        backgroundColor: 'hsla(290,100%,45%,.5)'
+    }]
+}
+
+new Chart("my-chart", {
+    type: "bar",
+    data: dataObj,
+    options: {
+        legend: {display: false},
+        scales: {
+            xAxes: [{
+                type: 'time',
+                offset: true,
+                gridLines: { offsetGridLines: true },
+                time: {
+                    unit: 'day'
+                }
+            }]
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>

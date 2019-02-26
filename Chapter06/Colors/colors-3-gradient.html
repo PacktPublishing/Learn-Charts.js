@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    </head>
+<body>
+<canvas id="canvas" width="200" height="100"></canvas>
+<script>
+    function drawGradient(chart) {
+        const x0 = 0;
+        const y0 = chart.scales["y-axis-0"].top;
+        const x1 = 0;
+        const y1 = chart.scales["y-axis-0"].bottom;
+
+        const gradient1 = chart.ctx.createLinearGradient(x0, y0, x1, y1);
+        gradient1.addColorStop(0, 'hsla(60,100%,70%,.4)');
+        gradient1.addColorStop(1, 'hsla(0,100%,25%,.8)');
+
+        const gradient2 = chart.ctx.createLinearGradient(x0, y0, x1, y1);
+        gradient2.addColorStop(0, 'hsla(300,100%,70%,.4)');
+        gradient2.addColorStop(1, 'hsla(240,100%,25%,.8)');
+
+        chart.data.datasets[0].backgroundColor = gradient1;
+        chart.data.datasets[1].backgroundColor = gradient2;
+    }
+
+    const data = {
+        labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        datasets: [
+            {
+                label: 'Week 1',
+                data: [2, 5, 2, 0, 20, 48, 51],
+                borderColor: 'red'
+            },{
+                label: 'Week 2',
+                data: [44, 36, 13, 40, 40, 9, 3],
+                borderColor: 'blue'
+            }
+        ]
+    };
+
+    const chart = new Chart('canvas', {
+        type: 'line',
+        data: data,
+        options: {
+            animation: {
+                onComplete: function(context) {
+                    drawGradient(context.chart);
+                }
+            }
+        }
+    });
+    drawGradient(chart);
+    chart.update();
+
+</script>
+
+</body>
+</html>

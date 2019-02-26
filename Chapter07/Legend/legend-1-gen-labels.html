@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Legends</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+<canvas id="myChart" width="400" height="200"></canvas>
+
+<script>
+
+    Chart.defaults.global.legend.labels.fontSize = 16;
+    Chart.defaults.global.legend.labels.boxWidth = 20;
+
+    const data = [[12, 19, 3, 5, 2, 3],[6, 5, 22, 2, 7, 11],[2, 3, 5, 16, 0, 1]];
+    const strokes = ['rgba(54, 162, 235, 1)', 'rgba(255,99,132,1)', 'rgba(132,255,99,1)'];
+    const fills   = ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(132, 200, 99, 0.2)'];
+    const grayFill = 'rgb(0,0,0,.2)';
+    const grayStroke = 'rgb(0,0,0,.8)';
+
+    const datasets = [];
+    for(let i = 0; i < data.length; i++) {
+        datasets.push({
+            label: 'Dataset ' + (i+1),
+            data: data[i],
+            backgroundColor: fills[i],
+            borderColor: strokes[i],
+            borderWidth: 1,
+        });
+    }
+
+    const myChart = new Chart("myChart", {
+        type: 'line',
+        data: {
+            labels: ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6'],
+            datasets: datasets,
+        },
+        options: {
+            legend: {
+                labels: {
+                    usePointStyle: true,
+                    boxWidth: 10,
+                    fontSize: 14,
+                    generateLabels: function(chart) {
+                        const items = [];
+                        chart.data.datasets.forEach((dataset, i) => {
+                            items.push({
+                                text: dataset.label,
+                                datasetIndex: i,
+                                fillStyle: dataset.borderColor,
+                                lineWidth: 0,
+                                pointStyle: 'rectRot',
+                            });
+                        });
+                        return items;
+                    },
+                },
+                position: 'left',
+                reverse: true,
+                onClick: function(event, label) {
+                    const index = label.datasetIndex;
+                    console.log(index)
+                    const dataset = this.chart.data.datasets[index];
+                    if(dataset.backgroundColor == fills[index]) {
+                        dataset.backgroundColor = grayFill;
+                        dataset.borderColor = grayStroke;
+                    } else {
+                        dataset.backgroundColor = fills[index];
+                        dataset.borderColor = strokes[index];
+                    }
+                    this.chart.update();
+                }
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

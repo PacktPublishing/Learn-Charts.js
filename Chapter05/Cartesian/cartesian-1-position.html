@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+
+<canvas id="my-scatter-chart" width="400" height="200"></canvas>
+
+<script>
+
+const dataset1 = [], dataset2 = [], dataset3 = [];
+for(let i = 0; i <= 360; i+= 5) {
+    const n = i * Math.PI / 180;
+    const point1 = {
+        x: n - Math.PI,
+        y: Math.sin(n)
+    }
+    const point2 = {
+        x: n - Math.PI,
+        y: Math.cos(n)
+    }
+    const point3 = {
+        x: Math.cos(n) + Math.sin(n),
+        y: Math.cos(n) - Math.sin(n)
+    }
+    dataset1.push(point1);
+    dataset2.push(point2);
+    dataset3.push(point3);
+}
+
+const dataObj = {
+    datasets: [
+        {
+            data: dataset1,
+            pointRadius: 2,
+            backgroundColor: 'red',
+        },
+        {
+            data: dataset2,
+            pointRadius: 2,
+            backgroundColor: 'blue',
+        },
+        {
+            data: dataset3,
+            pointRadius: 2,
+            backgroundColor: 'green',
+        }
+    ]
+}
+
+const chartObj = {
+    type: "scatter",
+    data: dataObj,
+    options: {
+        legend: {
+            display: false
+        },
+        scales: {
+            yAxes: [{
+                id: 'y-axis-1',
+                ticks: {min: -2,max: 2},
+                scaleLabel: {display: true, labelString: "Left Axis"},
+                gridLines: {
+                    zeroLineWidth: 2,
+                    zeroLineBorderDash: [20, 5],
+                    zeroLineColor: 'brown'
+                },
+                position: 'left'
+            },{
+                id: 'y-axis-2',
+                ticks: {min: -2, max: 2},
+                scaleLabel: {display: true,labelString: "Right Axis"},
+                gridLines: {display: false},
+                position: 'right'
+            }],
+            xAxes: [{
+                ticks: {min: -4, max: 4},
+                scaleLabel: {display: true,labelString: "Top Axis"},
+                position: 'top'
+            }],
+        }
+    }
+};
+new Chart("my-scatter-chart", chartObj);
+
+</script>
+
+</body>
+</html>

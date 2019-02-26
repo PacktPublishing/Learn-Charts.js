@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
+</head>
+<body>
+
+<canvas id="my-bubble-chart" width="1000" height="500"></canvas>
+
+<script>
+
+    fetch('../Data/cities15000.csv')
+            .then(response => response.text())
+    .then((csv) => {
+        const data = Papa.parse(csv, {header: true});
+        drawData(data.data.sort((a, b) =>  b.population - a.population));
+    });
+
+    function scaleR(value) {
+        const r = Math.floor(value / 100000);
+        return r != 0 ? r/10 : .25;
+    }
+
+    function drawData(datasets) {
+        const coordset = [];
+        datasets.forEach(city => {
+            const obj = {
+                x: city.longitude,
+                y: city.latitude,
+                r: scaleR(city.population)
+            };
+            coordset.push(obj);
+        });
+
+        const dataObj = {
+            datasets: [
+                {
+                    label: "Label",
+                    data: coordset,
+                    backgroundColor: function(context) {
+                        const value = context.dataset.data[context.dataIndex].r;
+                        if(value > 20) return 'hsla(0,100%,50%,.4)';
+                        if(value > 10) return 'hsla(30,100%,50%,.5)';
+                        if(value > 5) return 'hsla(60,100%,50%,.6)';
+                        if(value > 1) return 'hsla(120,100%,50%,.7)';
+                        else return 'hsla(0,0%,50%,1)';
+                    }
+                }
+            ]
+        }
+
+        const chartObj = {
+            type: "bubble",
+            data: dataObj,
+            options: {
+                animation: {
+                    duration: 0
+                },
+                title: {
+                    display: false
+                },
+                responsive: false,
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [
+                        {
+                            ticks: {
+                                min: -180,
+                                max: 180
+                            }
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            ticks: {
+                                min: -90,
+                                max: 90
+                            }
+                        }
+                    ]
+                }
+
+            }
+        };
+        new Chart("my-bubble-chart", chartObj);
+    }
+
+</script>
+
+</body>
+</html>

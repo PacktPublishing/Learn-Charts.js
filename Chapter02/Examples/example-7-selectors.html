@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        h1 {
+            font-family: sans-serif;
+            font-size: 16pt;
+            margin-bottom: 26px;
+        }
+
+        .tab h1 {
+            font-size: 10pt;
+            position: absolute;
+            top: -29px;
+            width: 100px;
+            background: whitesmoke;
+            padding: 5px 5px 5px 5px;
+            border: solid 1px gray;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border-bottom: solid 1px whitesmoke;
+            cursor: pointer;
+        }
+        .tab p {
+            font-size: 10pt;
+        }
+        .illustration {
+            height: 200px;
+            width: 200px;
+            border: solid blue 1px;
+            float: left;
+            margin-right: 5px;
+        }
+        .tab {
+            position: absolute;
+            width: 500px;
+            padding: 5px;
+            margin: 5px;
+        }
+        .tab .contents {
+            position: relative;
+            background: whitesmoke;
+            border: solid 1px gray;
+            border-top: solid 2px gray;
+            padding: 5px;
+            overflow: auto;
+        }
+        .container {
+            position: relative;
+            border: solid 1px green;
+        }
+        .tab:nth-child(2) h1 {
+            left: 116px;
+        }
+
+        .tab:nth-child(3) h1 {
+            left: 227px;
+        }
+
+    </style>
+</head>
+<body>
+<h1>CSS and JQuery selectors</h1>
+<div id="container">
+    <div class="tab first" id="section1">
+        <div class="contents">
+            <img class="illustration" src="../Images/jupiter.jpg" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+        <h1>Tab 1: Jupiter</h1>
+    </div>
+    <div class="tab" id="section2">
+        <div class="contents">
+            <img class="illustration" src="../Images/saturn.jpg" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+        <h1>Tab 2: Saturn</h1>
+    </div>
+    <div class="tab" id="section3">
+        <div class="contents">
+            <img class="illustration" src="../Images/pluto.jpg" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+        <h1>Tab 3: Pluto</h1>
+    </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $(".tab").on("click", function() {
+
+        $(".tab h1").css("color", "gray");
+        $(".tab h1").css("background", "white");
+        $(".tab h1").css("font-weight", "normal");
+        $(".tab h1").css("z-index", "-1");
+        $("#" + $(this).attr("id") + " h1").css("color", "black");
+        $("#" + $(this).attr("id") + " h1").css("background", "whitesmoke");
+        $("#" + $(this).attr("id") + " h1").css("font-weight", "bold");
+        $("#" + $(this).attr("id") + " h1").css("z-index", "1");
+
+        $(".tab .contents").fadeOut();
+        $("#" + $(this).attr("id") + " .contents").fadeIn();
+    });
+    $("#section1").trigger("click");
+</script>
+
+</html>

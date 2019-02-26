@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+<canvas id="chart" width="200" height="100"></canvas>
+
+<script>
+
+    var data = {
+        labels: ["One", "Two", "Three", "Four"],
+        datasets: [
+            {   label: 'Dataset 1',
+                data: [1, 15, 5, 20],
+                backgroundColor: 'rgba(100%,0%,0%,.6)',
+                borderColor: 'red'
+            },{
+                label: 'Dataset 2',
+                data: [5, 30, 9, 15],
+                backgroundColor: 'rgba(0%,0%,90%,.6)',
+                borderColor: 'blue'
+            },{
+                label: 'Dataset 3',
+                data: [20, 7, 15, 2],
+                backgroundColor: 'rgba(0%,70%,0%,.6)',
+                borderColor: 'green'
+            }]
+    };
+
+    new Chart('chart', { type: 'horizontalBar', data: data,
+        options: {
+            legend: { display: false },
+            tooltips: {
+                mode: 'index',
+                callbacks: {
+                    footer: (items, data) => 'Average: ' + (data.datasets
+                                             .map(d=>d.data[items[0].index])
+                                             .reduce((a,b)=>a+b, 0) / items.length)
+                                             .toFixed(2),
+                    title: (items, data) => "Stage " + items[0].yLabel,
+                    beforeBody: () => '============',
+                    afterBody: () => '------------------',
+                }
+            },
+            events: ['click']
+        }
+    });
+
+</script>
+
+</body>
+</html>

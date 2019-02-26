@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+
+<canvas id="my-scatter-chart" width="400" height="200"></canvas>
+
+<script>
+
+const data = [[],[],[]];
+for(let i = 0; i <= 1000; ++i) {
+    data[0].push({ x: i, y: i });
+    data[1].push({ x: i, y: Math.log(Math.pow(i,100)) });
+    data[2].push({ x: Math.log(Math.pow(i,100)), y: i });
+}
+const colors = ['red', 'blue', 'green'];
+const datasets = [];
+data.forEach(function(d, i) {
+    datasets.push({data: d, backgroundColor: colors[i], pointRadius: 2});
+})
+
+const chartObj = {
+    type: "scatter",
+    data: { datasets: datasets },
+    options: {
+        animation: { duration: 0 },
+        legend: { display: false },
+        scales: {
+            yAxes: [{
+                type: 'logarithmic'
+            }]
+        }
+    }
+};
+new Chart("my-scatter-chart", chartObj);
+
+</script>
+
+</body>
+</html>

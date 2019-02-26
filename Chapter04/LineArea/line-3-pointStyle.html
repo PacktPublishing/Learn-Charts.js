@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
+</head>
+<body>
+
+<canvas id="chart-1" width="400" height="200"></canvas>
+
+<script>
+    Chart.defaults.global.elements.point.radius = 10;
+    Chart.defaults.global.elements.line.borderWidth = .5;
+
+const dataObj = {
+    labels: ["1","2","3","4","5","6","7","8","9","10"],
+    datasets: [
+        {
+            fill: false,
+            pointStyle: 'line',
+            label: "pointStyle: 'line'",
+            backgroundColor: 'rgb(0,0,0,.2)',
+            borderColor: 'rgb(0,0,0,.9)',
+            data: [-2, -1, 0, 1, 0, -1, -2, -1, 0]
+        },{
+            fill: false,
+            pointStyle: 'dash',
+            label: "pointStyle: 'dash'",
+            backgroundColor: 'hsla(50,100%,55%,.2)',
+            borderColor: 'hsla(50,100%,45%,.9)',
+            data: [-1, 0, 1, 2, 1, 0, -1, 0, 1]
+        },{
+            fill: false,
+            pointStyle: 'rectRounded',
+            label: "pointStyle: 'rectRounded'",
+            backgroundColor: 'hsla(15,100%,50%,.2)',
+            borderColor: 'hsla(15,100%,50%,.9)',
+            data: [0, 1, 2, 3, 2, 1, 0, 1, 2]
+        },{
+            fill: false,
+            pointStyle: 'crossRot',
+            label: "pointStyle: 'crossRot'",
+            backgroundColor: 'hsla(0,100%,75%,.2)',
+            borderColor: 'hsla(0,100%,25%,.9)',
+            data: [1, 2, 3, 4, 3, 2, 1, 2, 3]
+        },{
+            fill: false,
+            pointStyle: 'rectRot',
+            label: "pointStyle: 'rectRot'",
+            backgroundColor: 'hsla(120,100%,75%,.2)',
+            borderColor: 'hsla(120,100%,25%,.9)',
+            data: [2, 3, 4, 5, 4, 3, 2, 3, 4]
+        },{
+            fill: false,
+            pointStyle: 'cross',
+            label: "pointStyle: 'cross'",
+            backgroundColor: 'hsla(30,100%,50%,.2)',
+            borderColor: 'hsla(30,100%,50%,.9)',
+            data: [3, 4, 5, 6, 5, 4, 3, 4, 5]
+        },{
+            fill: false,
+            pointStyle: 'triangle',
+            label: "pointStyle: 'triangle'",
+            backgroundColor: 'hsla(180,100%,65%,.2)',
+            borderColor: 'hsla(180,100%,45%,.9)',
+            data: [4, 5, 6, 7, 6, 5, 4, 5, 6]
+        },{
+            fill: false,
+            pointStyle: 'star',
+            label: "pointStyle: 'star'",
+            backgroundColor: 'hsla(300,100%,75%,.2)',
+            borderColor: 'hsla(300,100%,25%,.9)',
+            data: [5, 6, 7, 8, 7, 6, 5, 6, 7]
+        },{
+            fill: false,
+            pointStyle: 'rect',
+            label: "pointStyle: 'rect'",
+            backgroundColor: 'hsla(210,100%,75%,.2)',
+            borderColor: 'hsla(210,100%,25%,.9)',
+            data: [6, 7, 8, 9, 8, 7, 6, 7, 8]
+        },{
+            fill: false,
+            pointStyle: 'circle',
+            label: "pointStyle: 'circle'",
+            backgroundColor: 'hsla(240,100%,75%,.2)',
+            borderColor: 'hsla(240,100%,25%,.9)',
+            data: [7, 8, 9, 10, 9, 8, 7, 8, 9]
+        }
+    ]
+}
+
+new Chart("chart-1", {type: "line", data: dataObj, options: {
+    scales: {
+        xAxes:[{display: false}],
+        yAxes:[{display: false}]
+    },
+    legend: {
+        position: 'right',
+        reverse: true,
+        labels: {
+            padding: 24,
+            fontSize: 18
+        }
+    }
+}});
+
+</script>
+
+</body>
+</html>

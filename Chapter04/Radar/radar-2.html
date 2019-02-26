@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js">
+    </script>
+
+</head>
+<body>
+<canvas id="my-radar-chart" width="200" height="200"></canvas>
+
+<script>
+
+    const dataObj = {
+        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        datasets: [
+            {
+                label: "Reviewing",
+                data: [1, 4, 1, 3, 1],
+                borderColor: 'red',
+                backgroundColor: 'hsla(0,75%,75%,.25)'
+            },
+            {
+                label: "Research",
+                data: [1, 1, 4, 1, 1],
+                borderColor: 'blue',
+                backgroundColor: 'hsla(240,75%,75%,.25)'
+            },
+            {
+                label: "Coding",
+                data: [5, 1, 1, 2, 1],
+                borderColor: 'yellow',
+                backgroundColor: 'hsla(60,75%,75%,.25)'
+            },
+            {
+                label: "Writing",
+                data: [2, 2, 2, 2, 3],
+                borderColor: 'green',
+                backgroundColor: 'hsla(120,75%,75%,.25)'
+            }
+
+        ]
+    }
+
+    const chartObj = {
+        type: "radar",
+        data: dataObj,
+        options: {
+            scale: {
+                ticks: {
+                    beginAtZero: true,
+                    stepSize: 1
+                }
+            }
+        }
+    };
+    new Chart("my-radar-chart", chartObj);
+
+</script>
+
+
+</body>
+</html>

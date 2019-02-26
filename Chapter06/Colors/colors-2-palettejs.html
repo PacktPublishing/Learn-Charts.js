@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ColorBrewer</title>
+    <script src="../JavaScript/palette.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="200" height="100"></canvas>
+<script>
+
+    Chart.defaults.global.defaultColor = 'rgba(80,80,80,1)';
+
+    const dataValues = [10, 5, 2, 20, 30, 41];
+    const dataLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    const colorsArray = palette('tol', 6).map(n=>'#'+n);
+    console.log(colorsArray)
+
+    const data = {
+        labels: dataLabels,
+        datasets: [
+            {
+                data: dataValues,
+                backgroundColor: colorsArray
+            }
+        ]
+    };
+
+    new Chart('canvas', {
+        type: 'bar',
+        data: data,
+        options: {legend: {display: false}}
+    });
+
+</script>
+
+</body>
+</html>
