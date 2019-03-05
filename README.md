@@ -1,7 +1,7 @@
 
 # Learn Charts.js
 
-<a href="https://www.packtpub.com/web-development/learn-chartjs?utm_source=github&utm_medium=repository&utm_campaign=9781789342482"><img src="Cover Image URL of the Book" alt="Learn Charts.js" height="256px" align="right"></a>
+<a href="https://www.packtpub.com/web-development/learn-chartjs?utm_source=github&utm_medium=repository&utm_campaign=9781789342482"><img src="https://www.packtpub.com/sites/default/files/9781789342482_cover.png" alt="Learn Charts.js" height="256px" align="right"></a>
 
 This is the code repository for [Learn Charts.js](https://www.packtpub.com/web-development/learn-chartjs?utm_source=github&utm_medium=repository&utm_campaign=9781789342482), published by Packt.
 
@@ -42,25 +42,19 @@ With the following software and hardware list you can run all code files present
 
 | Chapter    | Software required                   | OS required                        |
 | --------   | ------------------------------------| -----------------------------------|
-| 1-7        |Chart.js JavaScript library and plugins | Chrome, Edge, Firefox and Safari, must support ES6.**) |
+| 1-7        |Chart.js JavaScript library and plugins | Windows, MacOS, linux |
 
 
 ### Related products <Other books you may enjoy>
-* Linux: Powerful Server Administration [[Packt]](https://www.packtpub.com/networking-and-servers/linux-powerful-server-administration?utm_source=github&utm_medium=repository&utm_campaign=9781788293778) [[Amazon]](https://www.amazon.com/dp/1788293770)
+* D3.js Quick Start Guide [[Packt]](https://www.packtpub.com/networking-and-servers/linux-powerful-server-administration?utm_source=github&utm_medium=repository&utm_campaign=9781788293778) [[Amazon]](https://www.amazon.com/dp/1789342384)
 
-* Linux Device Drivers Development [[Packt]](https://www.packtpub.com/networking-and-servers/linux-device-drivers-development?utm_source=github&utm_medium=repository&utm_campaign=9781785280009) [[Amazon]](https://www.amazon.com/dp/1788293770)
+* Mastering The Faster Web with PHP, MySQL, and JavaScript [[Packt]](https://www.packtpub.com/web-development/mastering-faster-web-php-mysql-and-javascript?utm_source=github&utm_medium=repository&utm_campaign=9781788392211) [[Amazon]](https://www.amazon.com/dp/1788392213)
 
 ## Get to Know the Author
-**Author Name**
-Bio
-
-**Author Name**
-Bio
+**Helder da Rocha**
+has taught, written, and developed applications with Java and web technologies since 1995. In 1996 he wrote one of the first books in Portuguese about HTML and JavaScript. Since then he has created hundreds of presentations, tutorials, and course materials on Java, Java EE, programming tools, patterns, techniques, methodologies, HTML, CSS, JavaScript, SVG, XML, data visualization, Arduino, and Internet of Things. He holds a master's degree in computer science. He also has a background in the visual arts and design and has some of his artwork in permanent museum exhibits. He lives in São Paulo, Brazil, where he works as an independent consultant, developer, and instructor, and is a frequent speaker at technological events.
 
 
-## Other books by the authors
-* [Mastering Linux Network Administration](https://www.packtpub.com/networking-and-servers/mastering-linux-network-administration?utm_source=github&utm_medium=repository&utm_campaign=9781784399597)
-* [Linux Mint Essentials](https://www.packtpub.com/networking-and-servers/linux-mint-essentials?utm_source=github&utm_medium=repository&utm_campaign=9781782168157)
 
 ### Suggestions and Feedback
 [Click here](https://docs.google.com/forms/d/e/1FAIpQLSdy7dATC6QmEL81FIUuymZ0Wy9vH1jHkvpY57OiMeKGqib_Ow/viewform) if you have any feedback or suggestions.
